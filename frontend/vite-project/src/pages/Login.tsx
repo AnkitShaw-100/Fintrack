@@ -54,9 +54,10 @@ const Login = () => {
                 password: formData.password
             });
 
-            // Store token and user data
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
+            // Cast response data to expected type
+            const data = res.data as { token: string; user: any };
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
 
             if (formData.rememberMe) {
                 localStorage.setItem("rememberEmail", formData.email);

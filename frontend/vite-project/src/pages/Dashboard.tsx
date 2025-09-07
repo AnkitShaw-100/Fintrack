@@ -192,7 +192,7 @@ const Dashboard = () => {
 
             <Grid container spacing={3}>
                 {/* Add Expense Form */}
-                <Grid container={false} item xs={12} md={4}>
+                <Grid item xs={12} md={4}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>
                             Add New Expense
@@ -286,7 +286,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Expense Chart */}
-                <Grid container={false} item xs={12} md={8}>
+                <Grid item xs={12} md={8}>
                     <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
                         <Typography variant="h6" gutterBottom>
                             Expense Overview
@@ -296,7 +296,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Expenses Table */}
-                <Grid container={false} item xs={12}>
+                <Grid item xs={12}>
                     <Paper elevation={3} sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>
                             Your Expenses

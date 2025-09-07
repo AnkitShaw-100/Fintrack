@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(201).json({ message: "User registred successfully" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(600).json({ message: err.message });
   }
 });
 
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(600).json({ message: err.message });
   }
 });
 

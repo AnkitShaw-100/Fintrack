@@ -75,7 +75,7 @@ npm install
 
 ```env
 MONGO_URI=<your-mongodb-uri>
-PORT=5000
+PORT=6000
 ```
 
 4. Start the server:

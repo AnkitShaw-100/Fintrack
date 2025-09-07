@@ -1,18 +1,6 @@
 import { useState } from "react";
 import API from "../api/index.js";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  Container,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Alert,
-  Divider,
-  InputAdornment,
-  IconButton
-} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Signup = () => {
@@ -65,101 +53,88 @@ const Signup = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Box textAlign="center" mb={3}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Create an Account
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Join our community today
-          </Typography>
-        </Box>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="mb-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-600">Create an Account</h2>
+          <p className="mt-1 text-gray-600">Join our community today</p>
+        </div>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
+          <div className="mb-3 rounded bg-red-100 px-4 py-2 text-red-600 text-sm">{error}</div>
         )}
-
         {success && (
-          <Alert severity="success" sx={{ mb: 3 }}>
-            {success}
-          </Alert>
+          <div className="mb-3 rounded bg-green-100 px-4 py-2 text-green-600 text-sm">{success}</div>
         )}
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Full Name"
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+            type="text"
             name="name"
-            placeholder="John Doe"
+            placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
             required
           />
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email Address"
-            name="email"
+          <input
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
             type="email"
-            placeholder="john@example.com"
+            name="email"
+            placeholder="Email address"
             value={formData.email}
             onChange={handleChange}
             required
           />
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            name="password"
-            type={formData.showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {formData.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
+          <div className="relative">
+            <input
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              type={formData.showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+              <Visibility fontSize="small" />
+            </span>
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 focus:outline-none"
+              onClick={handleClickShowPassword}
+            >
+              {formData.showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+            </button>
+          </div>
 
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
+          <button
             type="submit"
+            className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
             disabled={loading}
-            sx={{ mt: 3, mb: 2, py: 1.5 }}
           >
             {loading ? "Creating Account..." : "Sign Up"}
-          </Button>
+          </button>
 
-          <Divider sx={{ my: 3 }}>OR</Divider>
+          <div className="my-3 flex items-center">
+            <div className="flex-1 border-t border-gray-300" />
+            <span className="mx-2 text-gray-400 text-xs">OR</span>
+            <div className="flex-1 border-t border-gray-300" />
+          </div>
 
-          <Box textAlign="center" mt={2}>
-            <Typography variant="body2">
-              Already have an account?{" "}
-              <Link to="/login" style={{ textDecoration: "none" }}>
+          <div className="text-center mt-2">
+            <span className="text-sm text-gray-600">
+              Already have an account?{' '}
+              <Link to="/login" className="text-green-600 hover:underline">
                 Log in
               </Link>
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
-    </Container>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

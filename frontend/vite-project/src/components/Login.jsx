@@ -1,35 +1,21 @@
 import { useState } from "react";
 import API from "../api";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  Container,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Alert,
-  Divider,
-  InputAdornment,
-  IconButton,
-  Checkbox,
-  FormControlLabel
-} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Lock as LockIcon, Email as EmailIcon } from "@mui/icons-material";
 
 const Login = () => {
-  
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     showPassword: false,
     rememberMe: false
   });
-  
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -82,124 +68,97 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Box textAlign="center" mb={3}>
-          <LockIcon color="primary" sx={{ fontSize: 50 }} />
-          <Typography variant="h4" component="h1" gutterBottom>
-            Welcome Back
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Log in to continue to your account
-          </Typography>
-        </Box>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="mb-6 text-center">
+          <LockIcon style={{ color: '#00a63e', fontSize: 50 }} />
+          <h2 className="mt-2 text-3xl font-bold text-gray-600">Welcome Back</h2>
+          <p className="mt-1 text-gray-600">Log in to continue to your account</p>
+        </div>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
+          <div className="mb-3 rounded bg-red-100 px-4 py-2 text-red-600 text-sm">{error}</div>
         )}
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email Address"
-            name="email"
-            type="email"
-            placeholder="john@example.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <EmailIcon color="action" />
-                </InputAdornment>
-              )
-            }}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            name="password"
-            type={formData.showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon color="action" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {formData.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mt: 1
-            }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                  color="primary"
-                />
-              }
-              label="Remember me"
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="relative">
+            <input
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              type="email"
+              name="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
             />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+              <EmailIcon fontSize="small" />
+            </span>
+          </div>
 
-            <Link to="/forgot-password" style={{ textDecoration: "none" }}>
-              <Typography variant="body2" color="primary">
-                Forgot password?
-              </Typography>
+          <div className="relative">
+            <input
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              type={formData.showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+              <LockIcon fontSize="small" />
+            </span>
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 focus:outline-none"
+              onClick={handleClickShowPassword}
+            >
+              {formData.showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 text-sm text-gray-600">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                className="accent-green-600"
+              />
+              Remember me
+            </label>
+            <Link to="/forgot-password" className="text-sm text-green-600 hover:underline">
+              Forgot password?
             </Link>
-          </Box>
+          </div>
 
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
+          <button
             type="submit"
+            className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
             disabled={loading}
-            sx={{ mt: 3, mb: 2, py: 1.5 }}
           >
             {loading ? "Logging In..." : "Log In"}
-          </Button>
+          </button>
 
-          <Divider sx={{ my: 3 }}>OR</Divider>
+          <div className="my-3 flex items-center">
+            <div className="flex-1 border-t border-gray-300" />
+            <span className="mx-2 text-gray-400 text-xs">OR</span>
+            <div className="flex-1 border-t border-gray-300" />
+          </div>
 
-          <Box textAlign="center" mt={2}>
-            <Typography variant="body2">
-              Don't have an account?{" "}
-              <Link to="/signup" style={{ textDecoration: "none" }}>
+          <div className="text-center mt-2">
+            <span className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-green-600 hover:underline">
                 Sign up
               </Link>
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
-    </Container>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

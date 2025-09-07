@@ -14,13 +14,13 @@ const Home = () => {
                 <div className="mt-8 flex justify-center gap-4">
                     <a
                         href="/signup"
-                        className="rounded-lg bg-green-600 px-6 py-3 text-white font-medium shadow-md transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1"
+                        className="rounded-lg bg-green-600 px-6 py-3 text-white font-medium shadow-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
                     >
                         Get Started
                     </a>
                     <a
                         href="/login"
-                        className="rounded-lg border border-green-600 px-6 py-3 text-green-600 font-medium shadow-sm transition hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1"
+                        className="rounded-lg border border-green-600 px-6 py-3 text-green-600 font-medium shadow-sm transition hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
                     >
                         Login
                     </a>

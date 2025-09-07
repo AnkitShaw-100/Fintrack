@@ -23,7 +23,6 @@ import {
     DialogContent,
     DialogActions,
     CircularProgress,
-    Grid,
     MenuItem,
     Select,
     FormControl,
@@ -40,6 +39,7 @@ import {
     Description as DescriptionIcon,
     CalendarToday as CalendarIcon
 } from "@mui/icons-material";
+import Grid from "@mui/material/Grid";
 
 const Dashboard = () => {
     // State for expenses and form

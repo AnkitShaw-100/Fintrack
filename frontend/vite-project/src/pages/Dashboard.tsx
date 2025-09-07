@@ -41,6 +41,14 @@ import {
 } from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 
+interface APIError {
+    response?: {
+        data?: {
+            message?: string;
+        };
+    };
+}
+
 const Dashboard = () => {
     // State for expenses and form
     const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -88,9 +96,13 @@ const Dashboard = () => {
     const fetchExpenses = async () => {
         try {
             const res = await API.get("/expenses");
-            setExpenses(res.data);
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Failed to fetch expenses");
+            setExpenses(res.data as Expense[]);
+        } catch (err: unknown) {
+            if (typeof err === "object" && err !== null && "response" in err) {
+                setError((err as APIError).response?.data?.message || "Failed to fetch expenses");
+            } else {
+                setError("Failed to fetch expenses");
+            }
         } finally {
             setLoading(false);
         }
@@ -110,8 +122,12 @@ const Dashboard = () => {
             setDate("");
             setDescription("");
             fetchExpenses();
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Failed to add expense");
+        } catch (err: unknown) {
+            if (typeof err === "object" && err !== null && "response" in err) {
+                setError((err as APIError).response?.data?.message || "Failed to add expense");
+            } else {
+                setError("Failed to add expense");
+            }
         }
     };
 
@@ -126,10 +142,14 @@ const Dashboard = () => {
                 date: editDate,
                 description: editDescription,
             });
-            setExpenses(expenses.map(exp => exp._id === editingId ? res.data : exp));
+            setExpenses(expenses.map(exp => exp._id === editingId ? (res.data as Expense) : exp));
             setEditingId(null);
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Failed to update expense");
+        } catch (err: unknown) {
+            if (typeof err === "object" && err !== null && "response" in err) {
+                setError((err as APIError).response?.data?.message || "Failed to update expense");
+            } else {
+                setError("Failed to update expense");
+            }
         }
     };
 
@@ -140,8 +160,12 @@ const Dashboard = () => {
             await API.delete(`/expenses/${expenseToDelete}`);
             setExpenses(expenses.filter((exp) => exp._id !== expenseToDelete));
             setDeleteDialogOpen(false);
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Failed to delete expense");
+        } catch (err: unknown) {
+            if (typeof err === "object" && err !== null && "response" in err) {
+                setError((err as APIError).response?.data?.message || "Failed to delete expense");
+            } else {
+                setError("Failed to delete expense");
+            }
         }
     };
 
@@ -168,7 +192,7 @@ const Dashboard = () => {
 
             <Grid container spacing={3}>
                 {/* Add Expense Form */}
-                <Grid item xs={12} md={4}>
+                <Grid container={false} item xs={12} md={4}>
                     <Paper elevation={3} sx={{ p: 3 }}>
                         <Typography variant="h6" gutterBottom>
                             Add New Expense
@@ -262,7 +286,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Expense Chart */}
-                <Grid item xs={12} md={8}>
+                <Grid container={false} item xs={12} md={8}>
                     <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
                         <Typography variant="h6" gutterBottom>
                             Expense Overview
@@ -272,7 +296,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Expenses Table */}
-                <Grid item xs={12}>
+                <Grid container={false} item xs={12}>
                     <Paper elevation={3} sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>
                             Your Expenses

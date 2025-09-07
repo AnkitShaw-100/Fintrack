@@ -10,15 +10,9 @@ import { Pie } from "react-chartjs-2";
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-import type { Expense } from "../types";
-
-type ExpenseChartProps = {
-  expenses: Expense[];
-};
-
-const ExpenseChart: React.FC<ExpenseChartProps> = ({ expenses }) => {
+const ExpenseChart = ({ expenses }) => {
   // Group expenses by category
-  const categoryTotals: Record<string, number> = {};
+  const categoryTotals = {};
   expenses.forEach((exp) => {
     categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
   });

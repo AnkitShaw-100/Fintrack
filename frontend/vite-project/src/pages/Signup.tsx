@@ -28,15 +28,18 @@ const Signup = () => {
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [success, setSuccess] = useState<string>("");
-
+    
+    // input handling
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // password toggle
     const handleClickShowPassword = () => {
         setFormData({ ...formData, showPassword: !formData.showPassword });
     };
 
+    //submit handling
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");

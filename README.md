@@ -1,132 +1,133 @@
-# 💰 Expense Manager (MERN + Vite + TSX)
+# FinTrack
 
-An **Expense Manager Web App** built with the **MERN stack**, featuring a **Vite + React + TypeScript frontend** and a **Node.js + Express + MongoDB backend**.
-The app lets users **track expenses**, manage categories, and **visualize spending trends with Chart.js**.
-
----
-
-## 🚀 Features
-
-* 🔐 **Authentication** – secure login/signup with JWT & bcrypt
-* 💵 **Expense Management** – add, update, delete expenses
-* 📊 **Charts & Analytics** – visualize expenses with Chart.js
-* 🗂 **Categories & Filtering** – organize expenses better
-* 🌐 **RESTful API** – clean and scalable backend
-* ⚡ **Vite + TSX frontend** – fast dev environment with TypeScript support
+**FinTrack** is a full-stack finance tracking application built with **MERN (MongoDB, Express, React, Node.js)**. It allows users to manage their expenses, visualize spending trends via charts, and securely sign up and log in.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-**Frontend (Vite Project):**
+* **User Authentication:** Signup and login functionality with password protection.
+* **Expense Management:** Add, view, and categorize expenses.
+* **Data Visualization:** Interactive expense charts to track spending trends.
+* **Responsive UI:** Built with **React** and **Material-UI** for a modern interface.
+* **API Driven:** Backend powered by **Express.js** and MongoDB.
 
-* React + TypeScript (TSX)
-* Chart.js
-* Axios
-* Tailwind CSS (if used)
+---
+
+## Tech Stack
+
+**Frontend:**
+
+* React with Vite
+* Material-UI (MUI)
+* React Router DOM for routing
 
 **Backend:**
 
-* Node.js
-* Express.js
-* MongoDB (Mongoose ODM)
-* JWT + bcrypt (Authentication & Security)
-* dotenv (Config management)
-* cors (Cross-origin resource sharing)
-* nodemon (Dev server)
+* Node.js & Express.js
+* MongoDB for database
+* Mongoose for object modeling
+
+**Other Tools:**
+
+* Axios for API requests
+* dotenv for environment variables
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
-expense-manager/
-│
-├── backend/                  # Backend (Node + Express)
-│   ├── config/               # DB & config files
-│   ├── middlewares/          # Authentication & error handling
-│   ├── models/               # Mongoose schemas
-│   ├── routes/               # Express routes
-│   ├── index.js              # Entry point
-│   └── package.json
-│
-├── frontend/ (Vite Project)  # Frontend (React + TSX)
-│   ├── public/               # Static assets
-│   ├── src/                  # Source code
-│   │   ├── components/       # Reusable components
-│   │   ├── pages/            # Dashboard, Login, Signup etc.
-│   │   └── App.tsx           # Entry point
-│   ├── index.html
-│   └── package.json
-│
-└── README.md
+backend/
+ ├─ config/         # DB and app configuration
+ ├─ middlewares/    # Custom Express middlewares
+ ├─ models/         # Mongoose models (User, Expense)
+ ├─ routes/         # API routes (auth.js, expenses.js)
+ ├─ index.js        # Server entry point
+frontend/vite-project/
+ ├─ src/
+ │   ├─ api/        # Axios instance
+ │   ├─ components/ # React components (Dashboard, Login, Signup, ExpenseChart)
+ │   ├─ assets/     # Static assets
+ │   ├─ App.jsx     # Root component
+ │   ├─ main.jsx    # Entry point for React
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation
 
-### 1️⃣ Clone the repo
+### Backend
 
-```bash
-git clone https://github.com/your-username/expense-manager.git
-cd expense-manager
-```
-
-### 2️⃣ Backend Setup
+1. Navigate to the backend folder:
 
 ```bash
 cd backend
+```
+
+2. Install dependencies:
+
+```bash
 npm install
 ```
 
-Create a `.env` file inside **backend/**:
+3. Create a `.env` file with your MongoDB connection string:
 
-```
+```env
+MONGO_URI=<your-mongodb-uri>
 PORT=5000
-MONGO_URI=your-mongodb-uri
-JWT_SECRET=your-secret-key
 ```
 
-Run backend:
+4. Start the server:
 
 ```bash
-npm run dev
+npm start
 ```
 
----
+### Frontend
 
-### 3️⃣ Frontend Setup (Vite + React + TSX)
+1. Navigate to the frontend folder:
 
 ```bash
-cd ../frontend
+cd frontend/vite-project
+```
+
+2. Install dependencies:
+
+```bash
 npm install
 ```
 
-Run frontend:
+3. Start the frontend dev server:
 
 ```bash
 npm run dev
 ```
 
-The app will be live on:
-
-* Frontend → `http://localhost:5173` (Vite default)
-* Backend → `http://localhost:5000`
+4. Open the app in your browser at [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 📊 Usage
+## Usage
 
-1. **Sign up / Login**
-2. **Add expenses** with amount, category, and description
-3. **View dashboard** with expense charts powered by Chart.js
-4. **Track spending patterns** over time
+1. Open the signup page and create a new account.
+2. Log in using your credentials.
+3. Add expenses with relevant categories and amounts.
+4. Visualize your expenses via interactive charts on the dashboard.
 
 ---
 
-## 📜 License
+## Future Improvements
 
-This project is licensed under the **MIT License**.
+* Add monthly/yearly expense reports.
+* Implement user profile and settings.
+* Add recurring expense management.
+* Export data to CSV or PDF.
+
+---
+
+## License
+
+This project is open source and free to use under the **MIT License**.
 
 ---

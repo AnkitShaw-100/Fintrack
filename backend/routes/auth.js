@@ -10,9 +10,9 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    //Checking id user exsists
-    const exsistingUser = await User.findOne({ email });
-    if (exsistingUser)
+    // Checking if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
       return res.status(400).json({ message: "Email already in use" });
 
     // Hash Password
@@ -23,9 +23,9 @@ router.post("/signup", async (req, res) => {
     const newUser = new User({ name, email, passwordHash });
     await newUser.save();
 
-    res.status(201).json({ message: "User registred successfully" });
+    res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
-    res.status(600).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -35,7 +35,12 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid ceredentials" });
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+
+    // Verify password
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -46,7 +51,7 @@ router.post("/login", async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (err) {
-    res.status(600).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 

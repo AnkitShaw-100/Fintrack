@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import API from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Lock as LockIcon, Email as EmailIcon } from "@mui/icons-material";
+import { UserContext } from "../context/userContext";
 
 const Login = () => {
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,8 +15,9 @@ const Login = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+  const [, setUser] = useContext(UserContext);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -41,8 +42,9 @@ const Login = () => {
       });
 
       // Save token and user data
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("fintrack_token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUser(res.data.user); // Store user in context
 
       if (formData.rememberMe) {
         localStorage.setItem("rememberEmail", formData.email);

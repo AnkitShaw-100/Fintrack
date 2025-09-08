@@ -1,7 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useContext(UserContext)
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("fintrack_token");
+    setUser(null);
+    navigate("/login");
+  };
+
   return (
     <nav className="bg-green-600 shadow-md">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
@@ -33,18 +44,29 @@ const Navbar = () => {
           >
             Profile
           </Link>
-          <Link
-            to="/login"
-            className="rounded-lg bg-white px-3 py-1 text-green-600 shadow-sm transition hover:bg-green-50"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="rounded-lg bg-white px-3 py-1 text-green-600 shadow-sm border border-green-600 transition hover:bg-green-50 hover:text-green-700 font-semibold"
-          >
-            Sign Up
-          </Link>
+          {!user ? (
+            <>
+              <Link
+                to="/login"
+                className="rounded-lg bg-white px-3 py-1 text-green-600 shadow-sm transition hover:bg-green-50"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="rounded-lg bg-white px-3 py-1 text-green-600 shadow-sm border border-green-600 transition hover:bg-green-50 hover:text-green-700 font-semibold"
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="rounded-lg bg-white px-3 py-1 text-green-600 shadow-sm border border-green-600 transition hover:bg-green-50 hover:text-green-700 font-semibold"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>

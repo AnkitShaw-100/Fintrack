@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 
 // S-1 : Create Context
-// This file is a duplicate. Please use userContext.jsx for all context imports.
+export const UserContext = createContext();
 
 // S-2 : Wrap all the child inside the provider 
 

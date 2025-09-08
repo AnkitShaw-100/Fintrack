@@ -5,7 +5,7 @@ import Signup from "./components/Signup.jsx";
 import Home from "./components/Home.jsx";
 import UserProfilePage from "./components/UserProfilePage.jsx";
 import Navbar from "./components/Navbar.jsx";
-import { UserProvider } from "./context/UserContext.jsx";
+import { UserProvider } from "./context/userContext.jsx";
 
 function App() {
   return (

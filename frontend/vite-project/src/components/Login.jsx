@@ -3,7 +3,7 @@ import API from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Lock as LockIcon, Email as EmailIcon } from "@mui/icons-material";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/userContext.jsx";
 
 const Login = () => {
   const [formData, setFormData] = useState({

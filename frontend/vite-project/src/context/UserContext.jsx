@@ -1,7 +1,5 @@
-import { useState, createContext } from "react";
-
-// S-1 : Create Context
-export const UserContext = createContext();
+import { useState } from "react";
+import { UserContext } from "./userContext";
 
 // S-2 : Wrap all the child inside the provider 
 export const UserProvider = ({ children }) => {

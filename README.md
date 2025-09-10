@@ -40,24 +40,12 @@
 ```
 backend/
  ├─ config/         # DB and app configuration
- ├─ middlewares/    # Custom Express middlewares
- ├─ models/         # Mongoose models (User, Expense)
- ├─ routes/         # API routes (auth.js, expenses.js)
- ├─ index.js        # Server entry point
-frontend/vite-project/
- ├─ src/
- │   ├─ api/        # Axios instance
  │   ├─ components/ # React components (Dashboard, Login, Signup, ExpenseChart)
  │   ├─ assets/     # Static assets
- │   ├─ App.jsx     # Root component
- │   ├─ main.jsx    # Entry point for React
-```
 
 ---
 
 ## Installation
-
-### Backend
 
 1. Navigate to the backend folder:
 
@@ -91,16 +79,8 @@ npm start
 ```bash
 cd frontend/vite-project
 ```
-
-2. Install dependencies:
-
 ```bash
 npm install
-```
-
-3. Start the frontend dev server:
-
-```bash
 npm run dev
 ```
 
@@ -125,7 +105,6 @@ npm run dev
 * Export data to CSV or PDF.
 
 ---
-
 ## License
 
 This project is open source and free to use under the **MIT License**.

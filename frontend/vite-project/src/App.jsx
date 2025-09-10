@@ -10,16 +10,16 @@ import { UserProvider } from "./context/userContext.jsx";
 function App() {
   return (
     <>
-    <UserProvider>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<UserProfilePage />} />
-      </Routes>
-    </UserProvider>
+      <UserProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+        </Routes>
+      </UserProvider>
     </>
   );
 }

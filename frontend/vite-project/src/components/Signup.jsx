@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../api/index.js";
+import API from "../api";
 import { useNavigate, Link } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 

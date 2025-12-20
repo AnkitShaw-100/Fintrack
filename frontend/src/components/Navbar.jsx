@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("fintrack_token");
+    localStorage.removeItem("user");
     setUser(null);
     navigate("/login");
   };

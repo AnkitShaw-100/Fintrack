@@ -1,1 +1,0 @@
-cookie, expiry of cookie, where should jwt be stored? why? how to make a cookie secure from hachers, sniffing

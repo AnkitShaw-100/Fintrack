@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
+import API from "../api";
 
 const UserProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("fintrack_token");
       if (!token) {
@@ -15,34 +15,20 @@ const UserProfilePage = () => {
       }
 
       try {
-        const res = await fetch(
-          "https://fintrack-backend-olive.vercel.app/api/user/profile",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        let data;
-        try {
-          data = await res.json();
-        } catch (jsonErr) {
-          throw new Error("Failed to parse response");
-        }
-
-        if (!res.ok) {
-          throw new Error(data.message || "Failed to fetch user profile");
-        }
-
-        setUser(data.user);
+        const res = await API.get("/api/user/profile");
+        setUser(res.data.user);
       } catch (err) {
-        setError(err.message || "Network error");
+        if (err?.response?.data?.message) {
+          setError(err.response.data.message);
+        } else {
+          setError("Failed to fetch user profile");
+        }
       } finally {
         setLoading(false);
       }
     };
 
+  useEffect(() => {
     fetchUser();
   }, []);
 

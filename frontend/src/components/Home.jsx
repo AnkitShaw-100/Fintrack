@@ -2,7 +2,7 @@ import React from "react";
 
 const Home = () => {
     return (
-        <div className="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gray-100 px-4">
+        <div className="flex pt-18 min-h-screen items-center justify-center bg-gray-100 px-4">
             <div className="max-w-2xl text-center">
                 <h1 className="text-4xl font-extrabold text-gray-600 sm:text-5xl">
                     Welcome to <span className="text-green-600">FinTrack</span>

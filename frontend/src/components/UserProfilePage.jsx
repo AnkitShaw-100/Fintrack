@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import API from "../api";
 
 const UserProfilePage = () => {
@@ -10,9 +10,19 @@ const UserProfilePage = () => {
   const [expError, setExpError] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [editCategory, setEditCategory] = useState("");
-  const [editAmount, setEditAmount] = useState(0);
+  const [editAmount, setEditAmount] = useState();
   const [editDate, setEditDate] = useState("");
   const [editDescription, setEditDescription] = useState("");
+
+  const initials = useMemo(() => {
+    if (!user?.name) return "U";
+    const parts = user.name.trim().split(" ").filter(Boolean);
+    const letters = parts
+      .slice(0, 2)
+      .map((p) => p[0])
+      .join("");
+    return letters.toUpperCase();
+  }, [user?.name]);
 
   const startEditing = (exp) => {
     setEditingId(exp._id);
@@ -46,45 +56,45 @@ const UserProfilePage = () => {
     }
   };
 
-    const fetchUser = async () => {
-      const token = localStorage.getItem("fintrack_token");
-      if (!token) {
-        setError("Please log in to view your profile.");
-        setLoading(false);
-        return;
-      }
+  const fetchUser = async () => {
+    const token = localStorage.getItem("fintrack_token");
+    if (!token) {
+      setError("Please log in to view your profile.");
+      setLoading(false);
+      return;
+    }
 
-      try {
-        const res = await API.get("/api/user/profile");
-        setUser(res.data.user);
-      } catch (err) {
-        if (err?.response?.data?.message) {
-          setError(err.response.data.message);
-        } else {
-          setError("Failed to fetch user profile");
-        }
-      } finally {
-        setLoading(false);
+    try {
+      const res = await API.get("/api/user/profile");
+      setUser(res.data.user);
+    } catch (err) {
+      if (err?.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Failed to fetch user profile");
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchExpenses = async () => {
-      const token = localStorage.getItem("fintrack_token");
-      if (!token) {
-        setExpError("Please log in to view expenses.");
-        setExpLoading(false);
-        return;
-      }
+  const fetchExpenses = async () => {
+    const token = localStorage.getItem("fintrack_token");
+    if (!token) {
+      setExpError("Please log in to view expenses.");
+      setExpLoading(false);
+      return;
+    }
 
-      try {
-        const res = await API.get("/api/expenses");
-        setExpenses(res.data || []);
-      } catch (err) {
-        setExpError(err?.response?.data?.message || "Failed to fetch expenses");
-      } finally {
-        setExpLoading(false);
-      }
-    };
+    try {
+      const res = await API.get("/api/expenses");
+      setExpenses(res.data || []);
+    } catch (err) {
+      setExpError(err?.response?.data?.message || "Failed to fetch expenses");
+    } finally {
+      setExpLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -92,26 +102,45 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-6">
-      <div className="w-full max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-700 mb-6">User Profile</h2>
+    <div className="max-h-screen pt-18 bg-gradient-to-b from-gray-50 to-gray-100  px-4 py-6">
+      <div className="w-full max-w-6xl mx-auto space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm uppercase tracking-wide text-gray-400">
+              Account
+            </p>
+            <h2 className="text-3xl font-bold text-gray-800">User Profile</h2>
+          </div>
+        </div>
 
         {/* Top grid: Profile + Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Profile Card */}
           <div className="rounded-2xl bg-white p-6 shadow-lg">
-            <h3 className="text-xl font-semibold text-gray-600 mb-4">Account Details</h3>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700 font-semibold">
+                {initials}
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-700">
+                  Account Details
+                </h3>
+                <p className="text-sm text-gray-500">Manage your info</p>
+              </div>
+            </div>
             {loading ? (
               <div className="text-gray-500">Loading...</div>
             ) : error ? (
               <div className="text-red-600">{error}</div>
             ) : user ? (
               <div className="space-y-3 text-gray-700">
-                <div>
-                  <span className="font-semibold">Name:</span> {user.name}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Name</span>
+                  <span className="font-semibold">{user.name}</span>
                 </div>
-                <div>
-                  <span className="font-semibold">Email:</span> {user.email}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Email</span>
+                  <span className="font-semibold">{user.email}</span>
                 </div>
               </div>
             ) : (
@@ -131,113 +160,217 @@ const UserProfilePage = () => {
 
           {/* Summary Card */}
           <div className="rounded-2xl bg-white p-6 shadow-lg">
-            <h3 className="text-xl font-semibold text-gray-600 mb-4">Expense Summary</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-gray-600">
+                Expense Summary
+              </h3>
+              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Last 10
+              </span>
+            </div>
             {expLoading ? (
               <div className="text-gray-500">Loading...</div>
             ) : expError ? (
               <div className="text-red-600">{expError}</div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <SummaryCard title="Total Expenses" value={expenses.length} />
-                <SummaryCard title="Total Spend" value={`₹${expenses.reduce((s, e) => s + e.amount, 0).toFixed(2)}`} />
-                <SummaryCard title="Latest" value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"} />
+                <SummaryCard
+                  title="Total Expenses"
+                  value={expenses.length}
+                  accent="bg-green-100 text-green-700"
+                />
+                <SummaryCard
+                  title="Total Spend"
+                  value={`₹${expenses
+                    .reduce((s, e) => s + e.amount, 0)
+                    .toFixed(2)}`}
+                  accent="bg-blue-100 text-blue-700"
+                />
+                <SummaryCard
+                  title="Latest"
+                  value={
+                    expenses[0]
+                      ? new Date(expenses[0].date).toLocaleDateString()
+                      : "-"
+                  }
+                  accent="bg-amber-100 text-amber-700"
+                />
               </div>
             )}
           </div>
         </div>
 
         {/* Expense History */}
-        <div className="rounded-2xl bg-white p-6 shadow-lg">
-          <h3 className="text-xl font-semibold text-gray-600 mb-4">Expense History</h3>
+        <div className="rounded-2xl bg-white p-6 shadow-lg  ">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                History
+              </p>
+              <h3 className="text-xl font-semibold text-gray-700">
+                Expense History
+              </h3>
+            </div>
+            <span className="text-xs text-gray-400">All Expenses</span>
+          </div>
           {expLoading ? (
             <div className="text-gray-500">Loading...</div>
           ) : expError ? (
             <div className="text-red-600">{expError}</div>
           ) : expenses.length === 0 ? (
-            <div className="rounded-lg bg-green-50 text-green-600 px-4 py-3">No expenses found.</div>
+            <div className="rounded-lg bg-green-50 text-green-600 px-4 py-3">
+              No expenses found.
+            </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">Category</th>
-                    <th className="px-4 py-2 text-right text-sm font-semibold text-gray-600">Amount</th>
-                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">Date</th>
-                    <th className="px-4 py-2 text-left text-sm font-semibold text-gray-600">Description</th>
-                    <th className="px-4 py-2 text-center text-sm font-semibold text-gray-600">Actions</th>
+            <div className="overflow-x-auto max-h-[36vh] overflow-y-scroll">
+              <table className="min-w-full text-sm">
+                <thead className="bg-gradient-to-r from-green-50 to-blue-50 sticky top-0 ">
+                  <tr className="border-b-2 border-green-200">
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
-                <tbody>
-                  {expenses.slice(0, 10).map((exp) => (
-                    <tr key={exp._id} className="hover:bg-green-50">
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {expenses.slice(0, 10).map((exp, index) => (
+                    <tr
+                      key={exp._id}
+                      className={`transition-colors duration-150 ${
+                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                      } hover:bg-green-50`}
+                    >
                       {editingId === exp._id ? (
                         <>
-                          <td className="px-4 py-2">
+                          <td className="px-6 py-3">
                             <input
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editCategory}
                               onChange={(e) => setEditCategory(e.target.value)}
                             />
                           </td>
-                          <td className="px-4 py-2 text-right">
+                          <td className="px-6 py-3 text-right">
                             <input
                               type="number"
-                              step="0.01"
-                              min="0"
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-sm text-right"
+                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editAmount}
                               onChange={(e) => setEditAmount(Number(e.target.value))}
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-6 py-3">
                             <input
                               type="date"
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editDate}
                               onChange={(e) => setEditDate(e.target.value)}
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-6 py-3">
                             <input
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editDescription}
                               onChange={(e) => setEditDescription(e.target.value)}
                             />
                           </td>
-                          <td className="px-4 py-2 text-center space-x-2">
-                            <button
-                              className="rounded bg-green-600 text-white px-3 py-1 text-sm font-medium hover:bg-green-700"
-                              onClick={() => handleUpdate(exp._id)}
-                            >
-                              Save
-                            </button>
-                            <button
-                              className="rounded bg-gray-200 text-gray-700 px-3 py-1 text-sm font-medium hover:bg-gray-300"
-                              onClick={() => setEditingId(null)}
-                            >
-                              Cancel
-                            </button>
+                          <td className="px-6 py-3 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                className="rounded-lg bg-green-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                onClick={() => handleUpdate(exp._id)}
+                              >
+                                Save
+                              </button>
+                              <button
+                                className="rounded-lg bg-gray-300 text-gray-700 px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-400 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                onClick={() => setEditingId(null)}
+                              >
+                                Cancel
+                              </button>
+                            </div>
                           </td>
                         </>
                       ) : (
                         <>
-                          <td className="px-4 py-2">{exp.category}</td>
-                          <td className="px-4 py-2 text-right">₹{exp.amount.toFixed(2)}</td>
-                          <td className="px-4 py-2">{new Date(exp.date).toLocaleDateString()}</td>
-                          <td className="px-4 py-2">{exp.description || "-"}</td>
-                          <td className="px-4 py-2 text-center space-x-2">
-                            <button
-                              className="rounded bg-blue-600 text-white px-3 py-1 text-sm font-medium hover:bg-blue-700"
-                              onClick={() => startEditing(exp)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="rounded bg-red-600 text-white px-3 py-1 text-sm font-medium hover:bg-red-700"
-                              onClick={() => handleDelete(exp._id)}
-                            >
-                              Delete
-                            </button>
+                          <td className="px-6 py-4">
+                            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-green-100 to-green-50 px-4 py-1.5 text-xs font-semibold text-green-800 border border-green-200">
+                              {exp.category}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <span className="font-bold text-gray-900 text-base">
+                              ₹{exp.amount.toFixed(2)}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-gray-600 font-medium">
+                              {new Date(exp.date).toLocaleDateString("en-IN", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="text-gray-700">
+                              {exp.description || (
+                                <span className="text-gray-400 italic">
+                                  No description
+                                </span>
+                              )}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                className="rounded-lg bg-blue-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                onClick={() => startEditing(exp)}
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                  />
+                                </svg>
+                                Edit
+                              </button>
+                              <button
+                                className="rounded-lg bg-red-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-red-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                onClick={() => handleDelete(exp._id)}
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                                Delete
+                              </button>
+                            </div>
                           </td>
                         </>
                       )}
@@ -255,9 +388,9 @@ const UserProfilePage = () => {
 
 export default UserProfilePage;
 
-function SummaryCard({ title, value }) {
+function SummaryCard({ title, value, accent }) {
   return (
-    <div className="rounded-xl border border-gray-100 p-4">
+    <div className={`rounded-xl border border-gray-100 p-4 ${accent || ""}`}>
       <div className="text-sm text-gray-500">{title}</div>
       <div className="mt-1 text-xl font-bold text-gray-700">{value}</div>
     </div>

@@ -253,46 +253,46 @@ const UserProfilePage = () => {
                     >
                       {editingId === exp._id ? (
                         <>
-                          <td className="px-6 py-3">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3">
                             <input
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editCategory}
                               onChange={(e) => setEditCategory(e.target.value)}
                             />
                           </td>
-                          <td className="px-6 py-3 text-right">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
                             <input
                               type="number"
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editAmount}
                               onChange={(e) => setEditAmount(Number(e.target.value))}
                             />
                           </td>
-                          <td className="px-6 py-3">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3">
                             <input
                               type="date"
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editDate}
                               onChange={(e) => setEditDate(e.target.value)}
                             />
                           </td>
-                          <td className="px-6 py-3">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
                             <input
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                               value={editDescription}
                               onChange={(e) => setEditDescription(e.target.value)}
                             />
                           </td>
-                          <td className="px-6 py-3 text-center">
-                            <div className="flex items-center justify-center gap-2">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                            <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
                               <button
-                                className="rounded-lg bg-green-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                className="rounded bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-green-600 transition-all"
                                 onClick={() => handleUpdate(exp._id)}
                               >
                                 Save
                               </button>
                               <button
-                                className="rounded-lg bg-gray-300 text-gray-700 px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-400 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                className="rounded bg-gray-300 text-gray-700 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-gray-400 transition-all"
                                 onClick={() => setEditingId(null)}
                               >
                                 Cancel
@@ -302,18 +302,18 @@ const UserProfilePage = () => {
                         </>
                       ) : (
                         <>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-green-100 to-green-50 px-4 py-1.5 text-xs font-semibold text-green-800 border border-green-200">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3">
+                            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-green-100 to-green-50 px-2 sm:px-3 py-1 text-xs font-semibold text-green-800 border border-green-200 whitespace-nowrap">
                               {exp.category}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-right">
-                            <span className="font-bold text-gray-900 text-base">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
+                            <span className="font-bold text-gray-900 text-xs sm:text-base whitespace-nowrap">
                               ₹{exp.amount.toFixed(2)}
                             </span>
                           </td>
-                          <td className="px-6 py-4">
-                            <span className="text-gray-600 font-medium">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3">
+                            <span className="text-gray-600 font-medium text-xs sm:text-sm">
                               {new Date(exp.date).toLocaleDateString("en-IN", {
                                 day: "2-digit",
                                 month: "short",
@@ -321,23 +321,23 @@ const UserProfilePage = () => {
                               })}
                             </span>
                           </td>
-                          <td className="px-6 py-4">
-                            <span className="text-gray-700">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
+                            <span className="text-gray-700 text-xs sm:text-sm line-clamp-2">
                               {exp.description || (
                                 <span className="text-gray-400 italic">
-                                  No description
+                                  -
                                 </span>
                               )}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-center">
-                            <div className="flex items-center justify-center gap-2">
+                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                            <div className="flex items-center justify-center gap-1 sm:gap-2">
                               <button
-                                className="rounded-lg bg-blue-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-blue-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                className="rounded bg-blue-500 text-white px-2 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-blue-600 transition-all flex items-center gap-0.5 sm:gap-1"
                                 onClick={() => startEditing(exp)}
                               >
                                 <svg
-                                  className="w-4 h-4"
+                                  className="w-3 h-3 sm:w-4 sm:h-4"
                                   fill="none"
                                   stroke="currentColor"
                                   viewBox="0 0 24 24"
@@ -349,14 +349,14 @@ const UserProfilePage = () => {
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                   />
                                 </svg>
-                                Edit
+                                <span className="hidden sm:inline">Edit</span>
                               </button>
                               <button
-                                className="rounded-lg bg-red-500 text-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-red-600 hover:shadow-md transition-all duration-150 flex items-center gap-1"
+                                className="rounded bg-red-500 text-white px-2 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-red-600 transition-all flex items-center gap-0.5 sm:gap-1"
                                 onClick={() => handleDelete(exp._id)}
                               >
                                 <svg
-                                  className="w-4 h-4"
+                                  className="w-3 h-3 sm:w-4 sm:h-4"
                                   fill="none"
                                   stroke="currentColor"
                                   viewBox="0 0 24 24"
@@ -368,7 +368,7 @@ const UserProfilePage = () => {
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                   />
                                 </svg>
-                                Delete
+                                <span className="hidden sm:inline">Delete</span>
                               </button>
                             </div>
                           </td>
@@ -390,9 +390,9 @@ export default UserProfilePage;
 
 function SummaryCard({ title, value, accent }) {
   return (
-    <div className={`rounded-xl border border-gray-100 p-4 ${accent || ""}`}>
-      <div className="text-sm text-gray-500">{title}</div>
-      <div className="mt-1 text-xl font-bold text-gray-700">{value}</div>
+    <div className={`rounded-xl border border-gray-100 p-3 sm:p-4 ${accent || ""}`}>
+      <div className="text-xs sm:text-sm text-gray-500">{title}</div>
+      <div className="mt-1 text-lg sm:text-xl font-bold text-gray-700 break-words">{value}</div>
     </div>
   );
 }

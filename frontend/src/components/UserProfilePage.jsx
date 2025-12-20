@@ -164,9 +164,6 @@ const UserProfilePage = () => {
               <h3 className="text-base sm:text-lg font-semibold text-gray-600">
                 Expense Summary
               </h3>
-              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Last 10
-              </span>
             </div>
             {expLoading ? (
               <div className="text-gray-500">Loading...</div>

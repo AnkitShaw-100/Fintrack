@@ -102,8 +102,8 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-3 sm:px-4 py-4 sm:py-6 pt-20 sm:pt-24">
-      <div className="w-full max-w-5xl mx-auto space-y-5 sm:space-y-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-2 sm:px-3 py-3 sm:py-5 pt-16 sm:pt-20">
+      <div className="w-full max-w-5xl mx-auto space-y-4 sm:space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs sm:text-sm uppercase tracking-wide text-gray-400">
@@ -114,10 +114,10 @@ const UserProfilePage = () => {
         </div>
 
         {/* Top grid: Profile + Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-5">
           {/* Profile Card */}
-          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4">
+          <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3">
               <div className="flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-full bg-green-100 text-green-700 font-semibold text-sm sm:text-base">
                 {initials}
               </div>
@@ -147,10 +147,10 @@ const UserProfilePage = () => {
               <div className="text-gray-500">No user data found.</div>
             )}
 
-            <div className="mt-4 sm:mt-6">
+            <div className="mt-3 sm:mt-5">
               <button
                 type="button"
-                className="rounded-lg bg-green-600 px-4 sm:px-5 py-2 text-sm sm:text-base font-medium text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
+                className="rounded-lg bg-green-600 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
                 aria-label="Edit Profile"
               >
                 Edit Profile
@@ -159,9 +159,9 @@ const UserProfilePage = () => {
           </div>
 
           {/* Summary Card */}
-          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-600">
+          <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
+            <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-600">
                 Expense Summary
               </h3>
               <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">
@@ -173,7 +173,7 @@ const UserProfilePage = () => {
             ) : expError ? (
               <div className="text-red-600">{expError}</div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                 <SummaryCard
                   title="Total Expenses"
                   value={expenses.length}
@@ -201,13 +201,13 @@ const UserProfilePage = () => {
         </div>
 
         {/* Expense History */}
-        <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
+          <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
             <div>
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 History
               </p>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-700">
                 Expense History
               </h3>
             </div>
@@ -218,15 +218,15 @@ const UserProfilePage = () => {
           ) : expError ? (
             <div className="text-red-600">{expError}</div>
           ) : expenses.length === 0 ? (
-            <div className="rounded-lg bg-green-50 text-green-600 px-4 py-3">
+            <div className="rounded-lg bg-green-50 text-green-600 px-3 py-2">
               No expenses found.
             </div>
           ) : (
-            <div className="overflow-x-auto max-h-96 overflow-y-auto">
+            <div className="overflow-x-auto max-h-80 overflow-y-auto">
               <table className="w-full text-xs sm:text-sm">
                 <thead className="bg-gradient-to-r from-green-50 to-blue-50 sticky top-0">
                   <tr className="border-b-2 border-green-200">
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-1.5 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Category
                     </th>
                     <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">

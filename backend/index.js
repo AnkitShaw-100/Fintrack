@@ -12,7 +12,10 @@ connectDB();
 const app = express();
 app.use(
   cors({
-    origin: ["https://fintrack-fullstack.vercel.app", "http://localhost:5173"],
+    origin: [
+      "https://fintrack-frontend-psi.vercel.app",
+      "http://localhost:5173"
+    ],
     credentials: true,
   })
 );

@@ -210,25 +210,25 @@ function Overview({ expenses }) {
         title="Total Spend"
         value={`₹${total.toFixed(2)}`}
         subtitle="All time"
-        accent="bg-blue-50 text-blue-700"
+        accent="bg-blue-100 text-blue-800"
       />
       <Card
         title="This Month"
         value={`₹${currentMonthTotal.toFixed(2)}`}
         subtitle={now.toLocaleString("default", { month: "long", year: "numeric" })}
-        accent="bg-green-50 text-green-700"
+        accent="bg-green-100 text-green-800"
       />
       <Card
         title="Top Category"
         value={topCategory}
         subtitle="Highest spend"
-        accent="bg-amber-50 text-amber-700"
+        accent="bg-amber-100 text-amber-800"
       />
       <Card
         title="Categories"
         value={categoryCount}
         subtitle="Tracked"
-        accent="bg-purple-50 text-purple-700"
+        accent="bg-purple-100 text-purple-800"
       />
     </div>
   );

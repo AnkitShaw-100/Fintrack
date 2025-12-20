@@ -102,30 +102,30 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="max-h-screen pt-18 bg-gradient-to-b from-gray-50 to-gray-100  px-4 py-6">
-      <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-3 sm:px-4 py-4 sm:py-6 pt-20 sm:pt-24">
+      <div className="w-full max-w-5xl mx-auto space-y-5 sm:space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm uppercase tracking-wide text-gray-400">
+            <p className="text-xs sm:text-sm uppercase tracking-wide text-gray-400">
               Account
             </p>
-            <h2 className="text-3xl font-bold text-gray-800">User Profile</h2>
+            <h2 className="text-xl sm:text-3xl font-bold text-gray-800">User Profile</h2>
           </div>
         </div>
 
         {/* Top grid: Profile + Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Profile Card */}
-          <div className="rounded-2xl bg-white p-6 shadow-lg">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700 font-semibold">
+          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4">
+              <div className="flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-full bg-green-100 text-green-700 font-semibold text-sm sm:text-base">
                 {initials}
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-700">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
                   Account Details
                 </h3>
-                <p className="text-sm text-gray-500">Manage your info</p>
+                <p className="text-xs sm:text-sm text-gray-500">Manage your info</p>
               </div>
             </div>
             {loading ? (
@@ -133,13 +133,13 @@ const UserProfilePage = () => {
             ) : error ? (
               <div className="text-red-600">{error}</div>
             ) : user ? (
-              <div className="space-y-3 text-gray-700">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">Name</span>
+              <div className="space-y-2 sm:space-y-3 text-gray-700 text-sm sm:text-base break-all">
+                <div className="flex items-start gap-2 flex-wrap">
+                  <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">Name:</span>
                   <span className="font-semibold">{user.name}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-500">Email</span>
+                <div className="flex items-start gap-2 flex-wrap">
+                  <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">Email:</span>
                   <span className="font-semibold">{user.email}</span>
                 </div>
               </div>
@@ -147,10 +147,10 @@ const UserProfilePage = () => {
               <div className="text-gray-500">No user data found.</div>
             )}
 
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <button
                 type="button"
-                className="rounded-lg bg-green-600 px-5 py-2 font-medium text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
+                className="rounded-lg bg-green-600 px-4 sm:px-5 py-2 text-sm sm:text-base font-medium text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
                 aria-label="Edit Profile"
               >
                 Edit Profile
@@ -159,9 +159,9 @@ const UserProfilePage = () => {
           </div>
 
           {/* Summary Card */}
-          <div className="rounded-2xl bg-white p-6 shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-semibold text-gray-600">
+          <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-600">
                 Expense Summary
               </h3>
               <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">
@@ -173,7 +173,7 @@ const UserProfilePage = () => {
             ) : expError ? (
               <div className="text-red-600">{expError}</div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <SummaryCard
                   title="Total Expenses"
                   value={expenses.length}
@@ -201,13 +201,13 @@ const UserProfilePage = () => {
         </div>
 
         {/* Expense History */}
-        <div className="rounded-2xl bg-white p-6 shadow-lg  ">
-          <div className="flex items-center justify-between mb-4">
+        <div className="rounded-2xl bg-white p-4 sm:p-6 shadow-lg">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 History
               </p>
-              <h3 className="text-xl font-semibold text-gray-700">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
                 Expense History
               </h3>
             </div>
@@ -222,23 +222,23 @@ const UserProfilePage = () => {
               No expenses found.
             </div>
           ) : (
-            <div className="overflow-x-auto max-h-[36vh] overflow-y-scroll">
-              <table className="min-w-full text-sm">
-                <thead className="bg-gradient-to-r from-green-50 to-blue-50 sticky top-0 ">
+            <div className="overflow-x-auto max-h-96 overflow-y-auto">
+              <table className="w-full text-xs sm:text-sm">
+                <thead className="bg-gradient-to-r from-green-50 to-blue-50 sticky top-0">
                   <tr className="border-b-2 border-green-200">
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Category
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Amount
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider hidden sm:table-cell">
                       Description
                     </th>
-                    <th className="px-6 py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>

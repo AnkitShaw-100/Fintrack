@@ -1,15 +1,24 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext.jsx";
+import API from "../api.js";
 
 const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useContext(UserContext)
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("fintrack_token");
-    localStorage.removeItem("user");
+  const handleLogout = async () => {
+    try {
+      await API.post("/auth/logout");
+    } catch (err) {
+      console.error("Logout request failed:", err);
+    }
+
+    try {
+      localStorage.removeItem("fintrack_token");
+    } catch {}
+
     setUser(null);
     navigate("/login");
   };

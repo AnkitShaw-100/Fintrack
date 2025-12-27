@@ -23,7 +23,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// Get all expenses for logged-in user
+// Get all expenses 
 router.get("/", auth, async (req, res) => {
   try {
     const expenses = await Expense.find({ userId: req.user.id }).sort({

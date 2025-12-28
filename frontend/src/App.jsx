@@ -5,6 +5,7 @@ import Signup from "./components/Signup.jsx";
 import Home from "./components/Home.jsx";
 import UserProfilePage from "./components/UserProfilePage.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Docs from "./components/Docs.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/docs" element={<Docs />} />
         <Route
           path="/dashboard"
           element={

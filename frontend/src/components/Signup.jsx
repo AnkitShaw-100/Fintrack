@@ -53,23 +53,26 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen pt-18 items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-        <div className="mb-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-600">Create an Account</h2>
-          <p className="mt-1 text-gray-600">Join our community today</p>
+    <div className="flex min-h-screen items-center justify-center bg-[#07090a] px-4">
+      <div className="w-full max-w-md rounded-2xl bg-[#0d1112] p-8 shadow-2xl border border-[#111318]">
+        <div className="mb-8 flex flex-col items-center">
+          <div className="w-14 h-14 rounded-full flex items-center justify-center mb-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+            <span style={{ color: '#b5f277', fontWeight: 800, fontSize: 28 }}>F</span>
+          </div>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">Create an Account</h2>
+          <p className="mt-1 text-[#b5f277]/80">Join our community today</p>
         </div>
 
         {error && (
-          <div className="mb-3 rounded bg-red-100 px-4 py-2 text-red-600 text-sm">{error}</div>
+          <div className="mb-3 rounded bg-red-100/80 px-4 py-2 text-red-700 text-sm">{error}</div>
         )}
         {success && (
-          <div className="mb-3 rounded bg-green-100 px-4 py-2 text-green-600 text-sm">{success}</div>
+          <div className="mb-3 rounded bg-green-100/80 px-4 py-2 text-green-700 text-sm">{success}</div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
             type="text"
             name="name"
             placeholder="Full Name"
@@ -79,7 +82,7 @@ const Signup = () => {
           />
 
           <input
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
             type="email"
             name="email"
             placeholder="Email address"
@@ -90,7 +93,7 @@ const Signup = () => {
 
           <div className="relative">
             <input
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
               type={formData.showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -98,12 +101,12 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
               <Visibility fontSize="small" />
             </span>
             <button
               type="button"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 focus:outline-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#b5f277] focus:outline-none"
               onClick={handleClickShowPassword}
             >
               {formData.showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
@@ -112,22 +115,22 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
+            className="w-full rounded-lg bg-[#b5f277] px-4 py-3 font-semibold text-[#07100a] shadow-md transition hover:bg-[#a0e05e] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:ring-offset-1"
             disabled={loading}
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
 
           <div className="my-3 flex items-center">
-            <div className="flex-1 border-t border-gray-300" />
-            <span className="mx-2 text-gray-400 text-xs">OR</span>
-            <div className="flex-1 border-t border-gray-300" />
+            <div className="flex-1 border-t border-[#23282c]" />
+            <span className="mx-2 text-[#b5f277]/60 text-xs">OR</span>
+            <div className="flex-1 border-t border-[#23282c]" />
           </div>
 
           <div className="text-center mt-2">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-[#b5f277]/80">
               Already have an account?{' '}
-              <Link to="/login" className="text-green-600 hover:underline">
+              <Link to="/login" className="text-[#b5f277] hover:underline">
                 Log in
               </Link>
             </span>

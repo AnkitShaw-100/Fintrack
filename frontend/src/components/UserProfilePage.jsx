@@ -102,55 +102,51 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-2 sm:px-3 py-3 sm:py-5 pt-16 sm:pt-20">
-      <div className="w-full max-w-5xl mx-auto space-y-4 sm:space-y-5">
+    <div className="min-h-screen bg-gradient-to-b from-[#0b0f12] to-[#1a1f23] px-2 sm:px-3 py-3 sm:py-5 pt-16 sm:pt-20">
+      <div className="w-full max-w-5xl mx-auto space-y-6 sm:space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs sm:text-sm uppercase tracking-wide text-gray-400">
-              Account
-            </p>
-            <h2 className="text-xl sm:text-3xl font-bold text-gray-800">User Profile</h2>
+            <p className="text-xs sm:text-sm uppercase tracking-wide text-[#b5f277] font-semibold">Account</p>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white drop-shadow">User Profile</h2>
           </div>
         </div>
 
         {/* Top grid: Profile + Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Profile Card */}
-          <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3">
-              <div className="flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-full bg-green-100 text-green-700 font-semibold text-sm sm:text-base">
+          <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#b5f277] text-[#0b0f12] font-extrabold text-lg shadow-lg border-2 border-[#b5f277]">
                 {initials}
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
-                  Account Details
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-500">Manage your info</p>
+                <h3 className="text-xl font-bold text-white">Account Details</h3>
+                <p className="text-xs sm:text-sm text-[#b5f277]">Manage your info</p>
               </div>
             </div>
             {loading ? (
-              <div className="text-gray-500">Loading...</div>
+              <div className="text-gray-400">Loading...</div>
             ) : error ? (
-              <div className="text-red-600">{error}</div>
+              <div className="text-red-400">{error}</div>
             ) : user ? (
-              <div className="space-y-2 sm:space-y-3 text-gray-700 text-sm sm:text-base break-all">
+              <div className="space-y-2 text-[#e6f7d6] text-sm sm:text-base break-all">
                 <div className="flex items-start gap-2 flex-wrap">
-                  <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">Name:</span>
+                  <span className="text-xs sm:text-sm text-[#b5f277] whitespace-nowrap">Name:</span>
                   <span className="font-semibold">{user.name}</span>
                 </div>
                 <div className="flex items-start gap-2 flex-wrap">
-                  <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">Email:</span>
+                  <span className="text-xs sm:text-sm text-[#b5f277] whitespace-nowrap">Email:</span>
                   <span className="font-semibold">{user.email}</span>
                 </div>
               </div>
             ) : (
-              <div className="text-gray-500">No user data found.</div>
+              <div className="text-gray-400">No user data found.</div>
             )}
 
-            <div className="mt-3 sm:mt-5">
+            <div className="mt-5">
               <button
                 type="button"
-                className="rounded-lg bg-green-600 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
+                className="rounded-lg bg-[#b5f277] px-4 py-2 text-sm font-bold text-[#0b0f12] shadow-lg transition hover:bg-[#d6ff8a] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:ring-offset-2"
                 aria-label="Edit Profile"
               >
                 Edit Profile
@@ -159,38 +155,30 @@ const UserProfilePage = () => {
           </div>
 
           {/* Summary Card */}
-          <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
-            <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-600">
-                Expense Summary
-              </h3>
+          <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <h3 className="text-lg font-bold text-[#b5f277]">Expense Summary</h3>
             </div>
             {expLoading ? (
-              <div className="text-gray-500">Loading...</div>
+              <div className="text-gray-400">Loading...</div>
             ) : expError ? (
-              <div className="text-red-600">{expError}</div>
+              <div className="text-red-400">{expError}</div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <SummaryCard
                   title="Total Expenses"
                   value={expenses.length}
-                  accent="bg-green-100 text-green-700"
+                  accent="bg-[#b5f277]/20 text-[#b5f277] border-[#b5f277]/30"
                 />
                 <SummaryCard
                   title="Total Spend"
-                  value={`₹${expenses
-                    .reduce((s, e) => s + e.amount, 0)
-                    .toFixed(2)}`}
-                  accent="bg-blue-100 text-blue-700"
+                  value={`₹${expenses.reduce((s, e) => s + e.amount, 0).toFixed(2)}`}
+                  accent="bg-[#7fffd4]/20 text-[#7fffd4] border-[#7fffd4]/30"
                 />
                 <SummaryCard
                   title="Latest"
-                  value={
-                    expenses[0]
-                      ? new Date(expenses[0].date).toLocaleDateString()
-                      : "-"
-                  }
-                  accent="bg-amber-100 text-amber-700"
+                  value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"}
+                  accent="bg-[#ffe066]/20 text-[#ffe066] border-[#ffe066]/30"
                 />
               </div>
             )}
@@ -198,98 +186,80 @@ const UserProfilePage = () => {
         </div>
 
         {/* Expense History */}
-        <div className="rounded-2xl bg-white p-3 sm:p-5 shadow-lg">
-          <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
-              <p className="text-xs uppercase tracking-wide text-gray-400">
-                History
-              </p>
-              <h3 className="text-base sm:text-lg font-semibold text-gray-700">
-                Expense History
-              </h3>
+              <p className="text-xs uppercase tracking-wide text-[#b5f277] font-semibold">History</p>
+              <h3 className="text-lg font-bold text-white">Expense History</h3>
             </div>
-            <span className="text-xs text-gray-400">All Expenses</span>
+            <span className="text-xs text-[#b5f277]">All Expenses</span>
           </div>
           {expLoading ? (
-            <div className="text-gray-500">Loading...</div>
+            <div className="text-gray-400">Loading...</div>
           ) : expError ? (
-            <div className="text-red-600">{expError}</div>
+            <div className="text-red-400">{expError}</div>
           ) : expenses.length === 0 ? (
-            <div className="rounded-lg bg-green-50 text-green-600 px-3 py-2">
-              No expenses found.
-            </div>
+            <div className="rounded-lg bg-[#b5f277]/10 text-[#b5f277] px-3 py-2">No expenses found.</div>
           ) : (
             <div className="overflow-x-auto max-h-80 overflow-y-auto">
               <table className="w-full text-xs sm:text-sm">
-                <thead className="bg-gradient-to-r from-green-50 to-blue-50 sticky top-0">
-                  <tr className="border-b-2 border-green-200">
-                    <th className="px-1.5 sm:px-3 py-1.5 sm:py-2 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                      Category
-                    </th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider hidden sm:table-cell">
-                      Description
-                    </th>
-                    <th className="px-2 sm:px-4 py-2 sm:py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
-                      Actions
-                    </th>
+                <thead className="bg-gradient-to-r from-[#b5f277]/20 to-[#7fffd4]/10 sticky top-0">
+                  <tr className="border-b-2 border-[#b5f277]/30">
+                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Category</th>
+                    <th className="px-2 sm:px-4 py-2 text-right text-xs font-bold text-[#b5f277] uppercase tracking-wider">Amount</th>
+                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Date</th>
+                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider hidden sm:table-cell">Description</th>
+                    <th className="px-2 sm:px-4 py-2 text-center text-xs font-bold text-[#b5f277] uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-100">
+                <tbody className="divide-y divide-[#b5f277]/10">
                   {expenses.slice(0, 10).map((exp, index) => (
                     <tr
                       key={exp._id}
-                      className={`transition-colors duration-150 ${
-                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                      } hover:bg-green-50`}
+                      className={`transition-colors duration-150 ${index % 2 === 0 ? "bg-white/0" : "bg-[#b5f277]/[0.03]"} hover:bg-[#b5f277]/10`}
                     >
                       {editingId === exp._id ? (
                         <>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3">
+                          <td className="px-2 sm:px-4 py-2">
                             <input
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
                               value={editCategory}
                               onChange={(e) => setEditCategory(e.target.value)}
                             />
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
+                          <td className="px-2 sm:px-4 py-2 text-right">
                             <input
                               type="number"
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
                               value={editAmount}
                               onChange={(e) => setEditAmount(Number(e.target.value))}
                             />
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3">
+                          <td className="px-2 sm:px-4 py-2">
                             <input
                               type="date"
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
                               value={editDate}
                               onChange={(e) => setEditDate(e.target.value)}
                             />
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
+                          <td className="px-2 sm:px-4 py-2 hidden sm:table-cell">
                             <input
-                              className="w-full rounded border border-gray-300 px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
                               value={editDescription}
                               onChange={(e) => setEditDescription(e.target.value)}
                             />
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                          <td className="px-2 sm:px-4 py-2 text-center">
                             <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
                               <button
-                                className="rounded bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-green-600 transition-all"
+                                className="rounded bg-[#b5f277] text-[#0b0f12] px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#d6ff8a] transition-all"
                                 onClick={() => handleUpdate(exp._id)}
                               >
                                 Save
                               </button>
                               <button
-                                className="rounded bg-gray-300 text-gray-700 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-gray-400 transition-all"
+                                className="rounded bg-[#222b2e] text-[#b5f277] px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#333] transition-all"
                                 onClick={() => setEditingId(null)}
                               >
                                 Cancel
@@ -299,18 +269,18 @@ const UserProfilePage = () => {
                         </>
                       ) : (
                         <>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3">
-                            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-green-100 to-green-50 px-2 sm:px-3 py-1 text-xs font-semibold text-green-800 border border-green-200 whitespace-nowrap">
+                          <td className="px-2 sm:px-4 py-2">
+                            <span className="inline-flex items-center rounded-full bg-[#b5f277]/20 px-2 sm:px-3 py-1 text-xs font-semibold text-[#b5f277] border border-[#b5f277]/30 whitespace-nowrap">
                               {exp.category}
                             </span>
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
-                            <span className="font-bold text-gray-900 text-xs sm:text-base whitespace-nowrap">
+                          <td className="px-2 sm:px-4 py-2 text-right">
+                            <span className="font-bold text-[#b5f277] text-xs sm:text-base whitespace-nowrap">
                               ₹{exp.amount.toFixed(2)}
                             </span>
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3">
-                            <span className="text-gray-600 font-medium text-xs sm:text-sm">
+                          <td className="px-2 sm:px-4 py-2">
+                            <span className="text-[#e6f7d6] font-medium text-xs sm:text-sm">
                               {new Date(exp.date).toLocaleDateString("en-IN", {
                                 day: "2-digit",
                                 month: "short",
@@ -318,19 +288,17 @@ const UserProfilePage = () => {
                               })}
                             </span>
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
-                            <span className="text-gray-700 text-xs sm:text-sm line-clamp-2">
+                          <td className="px-2 sm:px-4 py-2 hidden sm:table-cell">
+                            <span className="text-[#e6f7d6] text-xs sm:text-sm line-clamp-2">
                               {exp.description || (
-                                <span className="text-gray-400 italic">
-                                  -
-                                </span>
+                                <span className="text-[#b5f277]/60 italic">-</span>
                               )}
                             </span>
                           </td>
-                          <td className="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                          <td className="px-2 sm:px-4 py-2 text-center">
                             <div className="flex items-center justify-center gap-1 sm:gap-2">
                               <button
-                                className="rounded bg-blue-500 text-white px-2 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-blue-600 transition-all flex items-center gap-0.5 sm:gap-1"
+                                className="rounded bg-[#7fffd4] text-[#0b0f12] px-2 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#b5f277] hover:text-[#0b0f12] transition-all flex items-center gap-0.5 sm:gap-1"
                                 onClick={() => startEditing(exp)}
                               >
                                 <svg
@@ -349,7 +317,7 @@ const UserProfilePage = () => {
                                 <span className="hidden sm:inline">Edit</span>
                               </button>
                               <button
-                                className="rounded bg-red-500 text-white px-2 py-1 text-xs sm:text-sm font-medium shadow-sm hover:bg-red-600 transition-all flex items-center gap-0.5 sm:gap-1"
+                                className="rounded bg-[#ff6b6b] text-white px-2 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#ff8787] transition-all flex items-center gap-0.5 sm:gap-1"
                                 onClick={() => handleDelete(exp._id)}
                               >
                                 <svg
@@ -387,9 +355,9 @@ export default UserProfilePage;
 
 function SummaryCard({ title, value, accent }) {
   return (
-    <div className={`rounded-xl border border-gray-100 p-3 sm:p-4 ${accent || ""}`}>
-      <div className="text-xs sm:text-sm text-gray-500">{title}</div>
-      <div className="mt-1 text-lg sm:text-xl font-bold text-gray-700 break-words">{value}</div>
+    <div className={`rounded-xl border p-4 ${accent || ""} shadow-md`}>
+      <div className="text-xs sm:text-sm font-semibold uppercase tracking-wide mb-1">{title}</div>
+      <div className="text-xl sm:text-2xl font-extrabold break-words">{value}</div>
     </div>
   );
 }

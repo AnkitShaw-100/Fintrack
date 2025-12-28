@@ -10,7 +10,7 @@ const Login = () => {
     email: "",
     password: "",
     showPassword: false,
-    rememberMe: false
+    rememberMe: false,
   });
 
   const [error, setError] = useState("");
@@ -22,7 +22,7 @@ const Login = () => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -38,7 +38,7 @@ const Login = () => {
     try {
       const res = await API.post("/api/auth/login", {
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       });
 
       // Save token and user data
@@ -69,23 +69,38 @@ const Login = () => {
     }
   };
 
+  // Accent and background colors from Navbar
+  const accent = "#b5f277";
   return (
-    <div className="flex min-h-screen pt-18 items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-        <div className="mb-6 text-center">
-          <LockIcon style={{ color: '#00a63e', fontSize: 50 }} />
-          <h2 className="mt-2 text-3xl font-bold text-gray-600">Welcome Back</h2>
-          <p className="mt-1 text-gray-600">Log in to continue to your account</p>
+    <div className="flex min-h-screen items-center justify-center bg-[#07090a] px-4">
+      <div className="w-full max-w-md rounded-2xl bg-[#0d1112] p-8 shadow-2xl border border-[#111318]">
+        <div className="mb-8 flex flex-col items-center">
+          <div
+            className="w-14 h-14 rounded-full flex items-center justify-center mb-2"
+            style={{ background: "rgba(255,255,255,0.03)" }}
+          >
+            <span style={{ color: accent, fontWeight: 800, fontSize: 28 }}>
+              F
+            </span>
+          </div>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">
+            Log in to Finora
+          </h2>
+          <p className="mt-1 text-gray-400">
+            Welcome back! Please login to your account.
+          </p>
         </div>
 
         {error && (
-          <div className="mb-3 rounded bg-red-100 px-4 py-2 text-red-600 text-sm">{error}</div>
+          <div className="mb-3 rounded bg-red-100/80 px-4 py-2 text-red-700 text-sm">
+            {error}
+          </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="relative">
             <input
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-gray-200 focus:border-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277]/30"
               type="email"
               name="email"
               placeholder="Email address"
@@ -93,14 +108,14 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
               <EmailIcon fontSize="small" />
             </span>
           </div>
 
           <div className="relative">
             <input
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 text-gray-600 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-gray-200 focus:border-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277]/30"
               type={formData.showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -108,52 +123,59 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
               <LockIcon fontSize="small" />
             </span>
             <button
               type="button"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 focus:outline-none"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#b5f277] focus:outline-none"
               onClick={handleClickShowPassword}
             >
-              {formData.showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+              {formData.showPassword ? (
+                <VisibilityOff fontSize="small" />
+              ) : (
+                <Visibility fontSize="small" />
+              )}
             </button>
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm text-gray-600">
+            <label className="flex items-center gap-2 text-sm text-gray-400">
               <input
                 type="checkbox"
                 name="rememberMe"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="accent-green-600"
+                className="accent-[#b5f277]"
               />
               Remember me
             </label>
-            <Link to="/forgot-password" className="text-sm text-green-600 hover:underline">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-[#b5f277] hover:underline"
+            >
               Forgot password?
             </Link>
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
+            className="w-full rounded-lg bg-[#b5f277] px-4 py-3 font-semibold text-[#07100a] shadow-md transition hover:bg-[#a0e05e] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:ring-offset-1"
             disabled={loading}
           >
             {loading ? "Logging In..." : "Log In"}
           </button>
 
           <div className="my-3 flex items-center">
-            <div className="flex-1 border-t border-gray-300" />
-            <span className="mx-2 text-gray-400 text-xs">OR</span>
-            <div className="flex-1 border-t border-gray-300" />
+            <div className="flex-1 border-t border-[#23282c]" />
+            <span className="mx-2 text-gray-500 text-xs">OR</span>
+            <div className="flex-1 border-t border-[#23282c]" />
           </div>
 
           <div className="text-center mt-2">
-            <span className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/signup" className="text-green-600 hover:underline">
+            <span className="text-sm text-gray-400">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-[#b5f277] hover:underline">
                 Sign up
               </Link>
             </span>

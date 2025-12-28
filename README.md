@@ -1,6 +1,6 @@
-# FinTrack
+# Finora
 
-FinTrack is a full-stack finance tracking application built with the MERN stack. It helps users track expenses, categorize spending, and visualize trends through charts with secure authentication.
+Finora is a full-stack finance tracking application built with the MERN stack. It helps users track expenses, categorize spending, and visualize trends through charts with secure authentication.
 
 ## Features
 

@@ -67,17 +67,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="max-h-screen pt-18 overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-6">
-      <div className="w-full max-w-6xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-[#0d1112] text-gray-200 px-4 py-10 flex flex-col items-center pt-24">
+      <div className="w-full max-w-6xl mx-auto space-y-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-2">
           <div>
-            <p className="text-sm uppercase tracking-wide text-gray-400">Dashboard</p>
-            <h1 className="text-3xl font-bold text-gray-800">Expense Overview</h1>
+            <p className="text-sm uppercase tracking-wide text-[#b5f277]">
+              Dashboard
+            </p>
+            <h1 className="text-4xl font-extrabold text-white">
+              Expense Overview
+            </h1>
           </div>
         </div>
 
         {error && (
-          <div className="rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3 flex items-start gap-3">
+          <div className="rounded-lg bg-red-900/20 border border-red-700 text-red-300 px-4 py-3 flex items-start gap-3">
             <span className="text-lg">⚠️</span>
             <span>{error}</span>
           </div>
@@ -86,21 +90,23 @@ const Dashboard = () => {
         {/* Overview cards */}
         <Overview expenses={expenses} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Add Expense Form */}
           <div className="md:col-span-1">
-            <div className="rounded-2xl bg-white p-6 shadow-lg h-full">
+            <div className="rounded-2xl bg-[#181f23] p-8 shadow-xl border border-[#23282c] h-full">
               <div className="mb-4">
-                <p className="text-xs uppercase tracking-wide text-gray-400">Form</p>
-                <h2 className="text-xl font-semibold text-gray-700">Add Expense</h2>
+                <p className="text-xs uppercase tracking-wide text-[#b5f277]">
+                  Form
+                </p>
+                <h2 className="text-2xl font-bold text-white">Add Expense</h2>
               </div>
-              <form onSubmit={handleAddExpense} className="space-y-4">
+              <form onSubmit={handleAddExpense} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <label className="block text-sm font-medium text-[#b5f277] mb-2">
                     Category <span className="text-red-500">*</span>
                   </label>
                   <select
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    className="w-full rounded-lg border border-[#23282c] bg-[#0d1112] px-3 py-2 text-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-[#b5f277] transition"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     required
@@ -116,37 +122,37 @@ const Dashboard = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <label className="block text-sm font-medium text-[#b5f277] mb-2">
                     Amount (₹) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="number"
                     step="0.01"
                     min="0"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    className="w-full rounded-lg border border-[#23282c] bg-[#0d1112] px-3 py-2 text-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-[#b5f277] transition"
                     value={amount || ""}
                     onChange={(e) => setAmount(Number(e.target.value))}
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <label className="block text-sm font-medium text-[#b5f277] mb-2">
                     Date <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="date"
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    className="w-full rounded-lg border border-[#23282c] bg-[#0d1112] px-3 py-2 text-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-[#b5f277] transition"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <label className="block text-sm font-medium text-[#b5f277] mb-2">
                     Description
                   </label>
                   <textarea
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    className="w-full rounded-lg border border-[#23282c] bg-[#0d1112] px-3 py-2 text-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-[#b5f277] transition"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={3}
@@ -155,7 +161,7 @@ const Dashboard = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-lg bg-green-600 text-white font-semibold py-2.5 shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  className="w-full rounded-lg bg-[#b5f277] text-[#07100a] font-semibold py-2.5 shadow-md transition hover:bg-[#a0e05e] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:ring-offset-2"
                 >
                   Add Expense
                 </button>
@@ -165,10 +171,14 @@ const Dashboard = () => {
 
           {/* Expense Chart */}
           <div className="md:col-span-2">
-            <div className="rounded-2xl bg-white p-6 shadow-lg h-full flex flex-col">
+            <div className="rounded-2xl bg-[#181f23] p-8 shadow-xl border border-[#23282c] h-full flex flex-col">
               <div className="mb-4">
-                <p className="text-xs uppercase tracking-wide text-gray-400">Analytics</p>
-                <h2 className="text-xl font-semibold text-gray-700">Spending Breakdown</h2>
+                <p className="text-xs uppercase tracking-wide text-[#b5f277]">
+                  Analytics
+                </p>
+                <h2 className="text-2xl font-bold text-white">
+                  Spending Breakdown
+                </h2>
               </div>
               <div className="flex-1 min-h-80">
                 <ExpenseChart expenses={expenses} heightClass="h-full" />
@@ -201,34 +211,37 @@ function Overview({ expenses }) {
   }, {});
   const topCategory =
     Object.entries(byCategory).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
-  
+
   const categoryCount = Object.keys(byCategory).length;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       <Card
         title="Total Spend"
         value={`₹${total.toFixed(2)}`}
         subtitle="All time"
-        accent="bg-blue-100 text-blue-800"
+        accent="bg-[#23282c] text-[#b5f277] border border-[#23282c]"
       />
       <Card
         title="This Month"
         value={`₹${currentMonthTotal.toFixed(2)}`}
-        subtitle={now.toLocaleString("default", { month: "long", year: "numeric" })}
-        accent="bg-green-100 text-green-800"
+        subtitle={now.toLocaleString("default", {
+          month: "long",
+          year: "numeric",
+        })}
+        accent="bg-[#23282c] text-[#b5f277] border border-[#23282c]"
       />
       <Card
         title="Top Category"
         value={topCategory}
         subtitle="Highest spend"
-        accent="bg-amber-100 text-amber-800"
+        accent="bg-[#23282c] text-[#b5f277] border border-[#23282c]"
       />
       <Card
         title="Categories"
         value={categoryCount}
         subtitle="Tracked"
-        accent="bg-purple-100 text-purple-800"
+        accent="bg-[#23282c] text-[#b5f277] border border-[#23282c]"
       />
     </div>
   );
@@ -236,10 +249,14 @@ function Overview({ expenses }) {
 
 function Card({ title, value, subtitle, accent }) {
   return (
-    <div className={`rounded-xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition ${accent || ""}`}>
-      <div className="text-sm font-medium text-gray-600">{title}</div>
-      <div className="mt-2 text-2xl font-bold text-gray-800">{value}</div>
-      <div className="text-xs text-gray-500 mt-1">{subtitle}</div>
+    <div
+      className={`rounded-xl p-6 shadow-md hover:shadow-lg transition ${
+        accent || ""
+      }`}
+    >
+      <div className="text-sm font-medium text-[#b5f277]">{title}</div>
+      <div className="mt-2 text-2xl font-bold text-white">{value}</div>
+      <div className="text-xs text-gray-400 mt-1">{subtitle}</div>
     </div>
   );
 }

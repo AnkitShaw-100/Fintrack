@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-black border-t border-[#111318] mt-12">
+    <footer className="bg-black border-t border-[#111318]">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row md:justify-between gap-6">
           <div className="flex-1">

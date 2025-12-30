@@ -40,7 +40,10 @@ const Home = () => {
           <div className="flex justify-center md:justify-end self-stretch">
             {/* Compact dashboard panel replacing phone mockup */}
             <div className="w-full max-w-[21.6rem] md:w-[21.6rem] h-full rounded-3xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-4 shadow-2xl border border-[#111318]">
-              <div className="w-full rounded-2xl bg-[#0b0f12] p-4 flex flex-col h-full" style={{ minHeight: '90%', minWidth: '90%' }}>
+              <div
+                className="w-full rounded-2xl bg-[#0b0f12] p-4 flex flex-col h-full"
+                style={{ minHeight: "90%", minWidth: "90%" }}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <div
@@ -139,7 +142,7 @@ const Home = () => {
       </section>
 
       {/* Features */}
-      <section className="bg-[#07090a] border-[#111b00]">
+      <section>
         <div className="max-w-6xl mx-auto px-6 py-16">
           <div className="flex flex-col items-center justify-center">
             <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 text-center">
@@ -222,7 +225,7 @@ const Home = () => {
       </section>
 
       {/* Distinct Section: Financial Wellness */}
-      <section className="bg-[#07090a] border-[#111b00] py-20">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
           <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 text-center">
             Your Financial Wellness, Simplified
@@ -233,7 +236,7 @@ const Home = () => {
             in one place.
           </p>
           <div className="w-full flex flex-col md:flex-row gap-8 items-stretch justify-center">
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -246,7 +249,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -259,7 +262,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"

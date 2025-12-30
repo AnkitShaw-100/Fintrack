@@ -10,7 +10,7 @@ const Home = () => {
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start mt-20">
-          <div>
+          <div className="mt-20">
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-white">
               Finora — Take full control of your money
             </h1>
@@ -23,57 +23,24 @@ const Home = () => {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black font-semibold px-6 py-3 rounded-md shadow-md transition"
+                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black px-6 py-3 rounded-md shadow-md transition font-bold"
               >
                 Get Started
               </Link>
 
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 border border-[#2a2f33] text-gray-200 px-6 py-3 rounded-md hover:bg-[#0f1416] transition"
+                className="inline-flex items-center gap-2 border border-[#b5f277] text-[#b5f277] px-6 py-3 rounded-md hover:bg-[#0f1416] transition fomt-bold"
               >
                 Login
               </Link>
-            </div>
-
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl">
-              <div className="p-6 bg-[#0d1112] rounded-md">
-                <div className="text-2xl font-bold" style={{ color: accent }}>
-                  $2,408
-                </div>
-                <div className="text-sm text-gray-400">
-                  Average saved per month
-                </div>
-              </div>
-              <div className="p-6 bg-[#0d1112] rounded-md">
-                <div className="text-2xl font-bold" style={{ color: accent }}>
-                  98%
-                </div>
-                <div className="text-sm text-gray-400">
-                  Data encrypted & secure
-                </div>
-              </div>
-              <div className="p-6 bg-[#0d1112] rounded-md">
-                <div className="text-2xl font-bold" style={{ color: accent }}>
-                  3
-                </div>
-                <div className="text-sm text-gray-400">Connected accounts</div>
-              </div>
-              <div className="p-6 bg-[#0d1112] rounded-md">
-                <div className="text-2xl font-bold" style={{ color: accent }}>
-                  124
-                </div>
-                <div className="text-sm text-gray-400">
-                  Monthly transactions
-                </div>
-              </div>
             </div>
           </div>
 
           <div className="flex justify-center md:justify-end self-stretch">
             {/* Compact dashboard panel replacing phone mockup */}
-            <div className="w-full max-w-sm md:w-96 h-full rounded-3xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-4 shadow-2xl border border-[#111318]">
-              <div className="w-full rounded-2xl bg-[#0b0f12] p-4 flex flex-col h-full">
+            <div className="w-full max-w-[21.6rem] md:w-[21.6rem] h-full rounded-3xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-4 shadow-2xl border border-[#111318]">
+              <div className="w-full rounded-2xl bg-[#0b0f12] p-4 flex flex-col h-full" style={{ minHeight: '90%', minWidth: '90%' }}>
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <div
@@ -162,20 +129,6 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="text-sm text-red-400">-$3.20</div>
-                    </li>
-                    <li className="flex items-center justify-between p-2 rounded bg-[#0f1416]">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#1f2930] flex items-center justify-center text-sm">
-                          💡
-                        </div>
-                        <div>
-                          <div className="text-sm">Utilities</div>
-                          <div className="text-xs text-gray-400">
-                            2 Jul 2023
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-sm text-red-400">-$45.00</div>
                     </li>
                   </ul>
                 </div>
@@ -280,7 +233,7 @@ const Home = () => {
             in one place.
           </p>
           <div className="w-full flex flex-col md:flex-row gap-8 items-stretch justify-center">
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-2xl p-6 shadow-lg mb-6 md:mb-0">
+            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -293,7 +246,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-2xl p-6 shadow-lg mb-6 md:mb-0">
+            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -306,7 +259,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-2xl p-6 shadow-lg">
+            <div className="flex-1 flex flex-row items-center bg-[#181f23] rounded-lg p-6 shadow-lg">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"

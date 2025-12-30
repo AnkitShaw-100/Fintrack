@@ -1,7 +1,7 @@
 import { useState } from "react";
 import API from "../api";
 import { useNavigate, Link } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff, Email as EmailIcon, Person as PersonIcon, Lock as LockIcon } from "@mui/icons-material";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -54,13 +54,13 @@ const Signup = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#07090a] px-4">
-      <div className="w-full max-w-md rounded-2xl bg-[#0d1112] p-8 shadow-2xl border border-[#111318]">
+      <div className="w-full max-w-md rounded-2xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-8 shadow-2xl border border-[#111318] mt-10">
         <div className="mb-8 flex flex-col items-center">
           <div className="w-14 h-14 rounded-full flex items-center justify-center mb-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
             <span style={{ color: '#b5f277', fontWeight: 800, fontSize: 28 }}>F</span>
           </div>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Create an Account</h2>
-          <p className="mt-1 text-[#b5f277]/80">Join our community today</p>
+          <p className="mt-1 text-gray-400">Join our community today</p>
         </div>
 
         {error && (
@@ -71,29 +71,39 @@ const Signup = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <input
-            className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-
-          <input
-            className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
-            type="email"
-            name="email"
-            placeholder="Email address"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <div className="relative">
+            <input
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-gray-200  focus:border-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277]/30"
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
+              <PersonIcon fontSize="small" />
+            </span>
+          </div>
 
           <div className="relative">
             <input
-              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-[#b5f277] placeholder-[#b5f277]/60 focus:bg-[#181f23] focus:text-[#b5f277] focus:border-[#b5f277] focus:outline-none"
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-gray-200  focus:border-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277]/30"
+              type="email"
+              name="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
+              <EmailIcon fontSize="small" />
+            </span>
+          </div>
+
+          <div className="relative">
+            <input
+              className="w-full rounded-lg border border-[#23282c] bg-[#181f23] px-4 py-3 pl-10 text-gray-200  focus:border-[#b5f277] focus:outline-none focus:ring-2 focus:ring-[#b5f277]/30"
               type={formData.showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -102,7 +112,7 @@ const Signup = () => {
               required
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b5f277]">
-              <Visibility fontSize="small" />
+              <LockIcon fontSize="small" />
             </span>
             <button
               type="button"
@@ -128,8 +138,8 @@ const Signup = () => {
           </div>
 
           <div className="text-center mt-2">
-            <span className="text-sm text-[#b5f277]/80">
-              Already have an account?{' '}
+            <span className="text-sm text-white">
+              Already have an account ?{' '}
               <Link to="/login" className="text-[#b5f277] hover:underline">
                 Log in
               </Link>

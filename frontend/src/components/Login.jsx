@@ -73,7 +73,7 @@ const Login = () => {
   const accent = "#b5f277";
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#07090a] px-4">
-      <div className="w-full max-w-md rounded-2xl bg-[#0d1112] p-8 shadow-2xl border border-[#111318]">
+      <div className="w-full max-w-md rounded-2xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-8 shadow-2xl border border-[#111318] mt-10">
         <div className="mb-8 flex flex-col items-center">
           <div
             className="w-14 h-14 rounded-full flex items-center justify-center mb-2"
@@ -152,7 +152,7 @@ const Login = () => {
             </label>
             <Link
               to="/forgot-password"
-              className="text-sm text-[#b5f277] hover:underline"
+              className="text-sm text-white hover:underline"
             >
               Forgot password?
             </Link>

@@ -80,14 +80,14 @@ const Navbar = () => {
             <NavItem to="/dashboard" className="text-base font-semibold">
               Dashboard
             </NavItem>
-            <NavItem to="/docs" className="text-base font-semibold">
-              Docs
-            </NavItem>
             {user && (
               <NavItem to="/profile" className="text-base font-semibold">
                 Profile
               </NavItem>
             )}
+            <NavItem to="/docs" className="text-base font-semibold">
+              Docs
+            </NavItem>
           </div>
 
           <div className="hidden md:flex items-center gap-3">

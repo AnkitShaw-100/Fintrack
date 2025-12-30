@@ -56,8 +56,8 @@ const faqData = [
 const Docs = () => {
   const [openFaq, setOpenFaq] = useState(null);
   return (
-    <div className="min-h-screen bg-[#0d1112] text-gray-200 flex flex-col items-center px-4 py-20">
-      <div className="max-w-6xl w-full bg-[#0d1112] rounded-2xl p-10">
+    <div className="min-h-screen bg-[#07090a] text-gray-200 flex flex-col items-center px-4 py-20">
+      <div className="max-w-6xl w-full rounded-2xl p-10">
         <h1 className="text-4xl font-extrabold text-white mb-2 text-center">
           Finora Documentation
         </h1>
@@ -68,7 +68,7 @@ const Docs = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-14">
           {/* Getting Started */}
-          <div className="bg-[#181f23] rounded-xl p-8 border border-[#23282c] shadow flex flex-col gap-2 min-h-[220px] justify-center">
+          <div className="bg-[#0d1112] rounded-lg p-8 flex flex-col gap-2 min-h-[220px] justify-center">
             <div className="flex items-center gap-2 mb-2 justify-center">
               <h2 className="text-2xl font-bold text-[#b5f277]">
                 Getting Started
@@ -86,7 +86,7 @@ const Docs = () => {
           </div>
 
           {/* Managing Expenses */}
-          <div className="bg-[#181f23] rounded-xl p-8 border border-[#23282c] shadow flex flex-col gap-2 min-h-[220px] justify-center">
+          <div className="bg-[#0d1112] rounded-xl p-8 flex flex-col gap-2 min-h-[220px] justify-center">
             <div className="flex items-center gap-2 mb-2 justify-center">
               <h2 className="text-2xl font-bold text-[#b5f277] ">
                 Managing Expenses
@@ -104,7 +104,7 @@ const Docs = () => {
           </div>
 
           {/* Budgeting Tips */}
-          <div className="bg-[#181f23] rounded-xl p-8 border border-[#23282c] shadow flex flex-col gap-2 min-h-[220px] justify-center">
+          <div className="bg-[#0d1112] rounded-xl p-8 flex flex-col gap-2 min-h-[220px] justify-center">
             <div className="flex items-center gap-2 mb-2 justify-center">
               <h2 className="text-2xl font-bold text-[#b5f277]">
                 Budgeting Tips
@@ -122,7 +122,7 @@ const Docs = () => {
           </div>
 
           {/* Security & Privacy */}
-          <div className="bg-[#181f23] rounded-xl p-8 border border-[#23282c] shadow flex flex-col gap-2 min-h-[220px] justify-center">
+          <div className="bg-[#0d1112] rounded-xl p-8 flex flex-col gap-2 min-h-[220px] justify-center">
             <div className="flex items-center gap-2 mb-2 justify-center">
               <h2 className="text-2xl font-bold text-[#b5f277]">
                 Security & Privacy
@@ -141,7 +141,7 @@ const Docs = () => {
         </div>
 
         {/* FAQ Section */}
-        <div className="bg-[#181f23] rounded-xl p-8 border border-[#23282c] shadow w-full mt-2">
+        <div className="bg-[#0d1112] rounded-xl p-8 w-full mt-2">
           <div className="flex items-center gap-2 mb-6 justify-center">
             <h2 className="text-2xl font-bold text-[#b5f277]">
               Frequently Asked Questions

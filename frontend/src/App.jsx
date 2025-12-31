@@ -4,33 +4,36 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import Home from "./components/Home.jsx";
 import UserProfilePage from "./components/UserProfilePage.jsx";
-import Navbar from "./components/Navbar.jsx";
 import Docs from "./components/Docs.jsx";
+import Layout from "./components/Layout.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
 function App() {
   return (
     <UserProvider>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/docs" element={<Docs />} />
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/login" element={<Layout><Login /></Layout>} />
+        <Route path="/signup" element={<Layout><Signup /></Layout>} />
+        <Route path="/docs" element={<Layout><Docs /></Layout>} />
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
+            <Layout>
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            </Layout>
           }
         />
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
-              <UserProfilePage />
-            </ProtectedRoute>
+            <Layout>
+              <ProtectedRoute>
+                <UserProfilePage />
+              </ProtectedRoute>
+            </Layout>
           }
         />
       </Routes>

@@ -124,7 +124,7 @@ const Navbar = () => {
             <button
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
-              className="p-1 rounded-md text-white"
+              className="p-1 rounded-lg text-white"
             >
               {open ? (
                 <svg

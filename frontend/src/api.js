@@ -19,8 +19,6 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Redirect to login on 401 (invalid/expired token). Components will receive
-// an error object with `isAuthRedirect` and should avoid showing auth errors.
 API.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -28,10 +26,9 @@ API.interceptors.response.use(
     if (status === 401) {
       try {
         localStorage.removeItem("fintrack_token");
-      } catch (e) {
-        // ignore
+      } catch (error) {
+        console.log(error);
       }
-      // Use replace so user can't go back to the protected page
       if (typeof window !== "undefined") window.location.replace("/login");
       return Promise.reject({ isAuthRedirect: true });
     }

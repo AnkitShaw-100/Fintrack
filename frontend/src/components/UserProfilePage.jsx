@@ -1,355 +1,381 @@
 import { useEffect, useMemo, useState } from "react";
 import API from "../api";
 
+const ACCENT = "#b5f277";
+
 const UserProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [expenses, setExpenses] = useState([]);
   const [expLoading, setExpLoading] = useState(true);
   const [expError, setExpError] = useState(null);
+
   const [editingId, setEditingId] = useState(null);
   const [editCategory, setEditCategory] = useState("");
-  const [editAmount, setEditAmount] = useState();
+  const [editAmount, setEditAmount] = useState("");
   const [editDate, setEditDate] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+
   const initials = useMemo(() => {
     if (!user?.name) return "U";
-    const parts = user.name.trim().split(" ").filter(Boolean);
-    const letters = parts
+    return user.name
+      .split(" ")
       .slice(0, 2)
-      .map((p) => p[0])
-      .join("");
-    return letters.toUpperCase();
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
   }, [user?.name]);
 
-  const startEditing = (exp) => {
-    setEditingId(exp._id);
-    setEditCategory(exp.category);
-    setEditAmount(exp.amount);
-    setEditDate(exp.date.split("T")[0]);
-    setEditDescription(exp.description || "");
-  };
+  // Sort expenses by date (latest first) and paginate
+  const sortedExpenses = useMemo(() => {
+    return [...expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [expenses]);
 
-  const handleUpdate = async (id) => {
-    try {
-      const res = await API.put(`/api/expenses/${id}`, {
-        category: editCategory,
-        amount: editAmount,
-        date: editDate,
-        description: editDescription,
-      });
-      setExpenses((prev) => prev.map((e) => (e._id === id ? res.data : e)));
-      setEditingId(null);
-    } catch (err) {
-      if (err?.isAuthRedirect) return;
-      setExpError(err?.response?.data?.message || "Failed to update expense");
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await API.delete(`/api/expenses/${id}`);
-      setExpenses((prev) => prev.filter((e) => e._id !== id));
-    } catch (err) {
-      if (err?.isAuthRedirect) return;
-      setExpError(err?.response?.data?.message || "Failed to delete expense");
-    }
-  };
-
-  const fetchUser = async () => {
-    const token = localStorage.getItem("fintrack_token");
-    if (!token) {
-      setError("Please log in to view your profile.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const res = await API.get("/api/user/profile");
-      setUser(res.data.user);
-    } catch (err) {
-      if (err?.isAuthRedirect) return;
-      if (err?.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Failed to fetch user profile");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchExpenses = async () => {
-    const token = localStorage.getItem("fintrack_token");
-    if (!token) {
-      setExpError("Please log in to view expenses.");
-      setExpLoading(false);
-      return;
-    }
-
-    try {
-      const res = await API.get("/api/expenses");
-      setExpenses(res.data || []);
-    } catch (err) {
-      if (err?.isAuthRedirect) return;
-      setExpError(err?.response?.data?.message || "Failed to fetch expenses");
-    } finally {
-      setExpLoading(false);
-    }
-  };
+  const totalPages = Math.ceil(sortedExpenses.length / itemsPerPage);
+  const paginatedExpenses = useMemo(() => {
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    return sortedExpenses.slice(startIdx, startIdx + itemsPerPage);
+  }, [sortedExpenses, currentPage]);
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await API.get("/api/user/profile");
+        setUser(res.data.user);
+      } catch {
+        setError("Failed to fetch user profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchExpenses = async () => {
+      try {
+        const res = await API.get("/api/expenses");
+        setExpenses(res.data || []);
+      } catch {
+        setExpError("Failed to fetch expenses");
+      } finally {
+        setExpLoading(false);
+      }
+    };
+
     fetchUser();
     fetchExpenses();
   }, []);
 
+  const startEdit = (e) => {
+    setEditingId(e._id);
+    setEditCategory(e.category);
+    setEditAmount(e.amount);
+    setEditDate(e.date?.slice(0, 10));
+    setEditDescription(e.description || "");
+  };
+
+  const cancelEdit = () => setEditingId(null);
+
+  const saveEdit = async (id) => {
+    try {
+      await API.put(`/api/expenses/${id}`, {
+        category: editCategory,
+        amount: Number(editAmount),
+        date: editDate,
+        description: editDescription,
+      });
+
+      setExpenses((prev) =>
+        prev.map((e) =>
+          e._id === id
+            ? { ...e, category: editCategory, amount: editAmount, date: editDate, description: editDescription }
+            : e
+        )
+      );
+      setEditingId(null);
+    } catch {
+      alert("Failed to update expense");
+    }
+  };
+
+  const openDeleteModal = (id) => {
+    setDeleteTargetId(id);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTargetId) return;
+    try {
+      await API.delete(`/api/expenses/${deleteTargetId}`);
+      setExpenses((prev) => prev.filter((e) => e._id !== deleteTargetId));
+      setShowDeleteModal(false);
+      setDeleteTargetId(null);
+    } catch {
+      setExpError("Failed to delete expense");
+      setShowDeleteModal(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteTargetId(null);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0b0f12] to-[#1a1f23] px-4 sm:px-6 py-6 pt-24">
-      <div className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs sm:text-sm uppercase tracking-wide text-[#b5f277] font-semibold">Account</p>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white drop-shadow">User Profile</h2>
-          </div>
+    <div className="min-h-screen bg-[#07090a] text-gray-200 px-4 sm:px-6 pt-24 pb-12">
+      <div className="max-w-6xl mx-auto space-y-10">
+        {/* Header */}
+        <div className="text-center pt-10">
+          <h2 className="text-4xl font-extrabold text-white mb-2 text-center">
+            User Profile
+          </h2>
+          <p className="text-gray-400 mb-8 text-center text-lg">
+            Manage your account & transaction history
+          </p>
         </div>
 
-        {/* Top grid: Profile + Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
-          {/* Profile Card */}
-          <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#b5f277] text-[#0b0f12] font-extrabold text-lg shadow-lg border-2 border-[#b5f277]">
-                {initials}
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">Account Details</h3>
-                <p className="text-xs sm:text-sm text-[#b5f277]">Manage your info</p>
-              </div>
-            </div>
-            {loading ? (
-              <div className="text-gray-400">Loading...</div>
-            ) : error ? (
-              <div className="text-red-400">{error}</div>
-            ) : user ? (
-              <div className="space-y-2 text-[#e6f7d6] text-sm sm:text-base break-all">
-                <div className="flex items-start gap-2 flex-wrap">
-                  <span className="text-xs sm:text-sm text-[#b5f277] whitespace-nowrap">Name:</span>
-                  <span className="font-semibold">{user.name}</span>
-                </div>
-                <div className="flex items-start gap-2 flex-wrap">
-                  <span className="text-xs sm:text-sm text-[#b5f277] whitespace-nowrap">Email:</span>
-                  <span className="font-semibold">{user.email}</span>
-                </div>
-              </div>
-            ) : (
-              <div className="text-gray-400">No user data found.</div>
-            )}
-
-            <div className="mt-5">
-              <button
-                type="button"
-                className="rounded-md bg-[#b5f277] px-4 py-2 text-sm font-bold text-[#07100a] shadow transition hover:bg-[#d6ff8a] focus:outline-none"
-                aria-label="Edit Profile"
-              >
-                Edit Profile
-              </button>
-            </div>
-          </div>
-
-          {/* Summary Card */}
-          <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h3 className="text-lg font-bold text-[#b5f277]">Expense Summary</h3>
-            </div>
-            {expLoading ? (
-              <div className="text-gray-400">Loading...</div>
-            ) : expError ? (
-              <div className="text-red-400">{expError}</div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <SummaryCard title="Total Expenses" value={expenses.length} colorClass="text-[#b5f277]" />
-                <SummaryCard title="Total Spend" value={`₹${expenses.reduce((s, e) => s + e.amount, 0).toFixed(2)}`} colorClass="text-[#7fffd4]" />
-                <SummaryCard title="Latest" value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"} colorClass="text-[#ffe066]" />
-              </div>
-            )}
-          </div>
+        {/* Profile + Summary */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ProfileCard user={user} loading={loading} error={error} initials={initials} />
+          <SummaryCard expenses={expenses} loading={expLoading} error={expError} />
         </div>
 
-        {/* Expense History */}
-        <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-            <div>
-              <p className="text-xs uppercase tracking-wide text-[#b5f277] font-semibold">History</p>
-              <h3 className="text-lg font-bold text-white">Expense History</h3>
-            </div>
-            <span className="text-xs text-[#b5f277]">All Expenses</span>
-          </div>
+        {/* Transaction History */}
+        <div className="rounded-2xl bg-[#0b0f12] p-6 border border-[#111318] shadow-lg">
+          <h3 className="text-xl font-bold mb-6 text-center" style={{ color: ACCENT }}>
+            Transaction History
+          </h3>
+
           {expLoading ? (
-            <div className="text-gray-400">Loading...</div>
-          ) : expError ? (
-            <div className="text-red-400">{expError}</div>
+            <p className="text-gray-400 text-center">Loading...</p>
           ) : expenses.length === 0 ? (
-            <div className="rounded-lg bg-[#b5f277]/10 text-[#b5f277] px-3 py-2">No expenses found.</div>
+            <p className="text-gray-400 text-center">No transactions yet.</p>
           ) : (
-            <div className="overflow-x-auto max-h-80 overflow-y-auto">
-              <table className="w-full text-xs sm:text-sm">
-                <thead className="bg-[#0b0f12] sticky top-0">
-                  <tr className="border-b border-[#222b2e]">
-                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Category</th>
-                    <th className="px-2 sm:px-4 py-2 text-right text-xs font-bold text-[#b5f277] uppercase tracking-wider">Amount</th>
-                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Date</th>
-                    <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider hidden sm:table-cell">Description</th>
-                    <th className="px-2 sm:px-4 py-2 text-center text-xs font-bold text-[#b5f277] uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#2b3538]">
-                  {expenses.slice(0, 10).map((exp, index) => (
-                    <tr
-                      key={exp._id}
-                      className={`transition-colors duration-150 ${index % 2 === 0 ? "bg-white/0" : "bg-[#b5f277]/[0.03]"} hover:bg-[#b5f277]/10`}
-                    >
-                      {editingId === exp._id ? (
-                        <>
-                          <td className="px-2 sm:px-4 py-2">
-                            <input
-                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
-                              value={editCategory}
-                              onChange={(e) => setEditCategory(e.target.value)}
-                            />
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 text-right">
-                            <input
-                              type="number"
-                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
-                              value={editAmount}
-                              onChange={(e) => setEditAmount(Number(e.target.value))}
-                            />
-                          </td>
-                          <td className="px-2 sm:px-4 py-2">
-                            <input
-                              type="date"
-                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
-                              value={editDate}
-                              onChange={(e) => setEditDate(e.target.value)}
-                            />
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 hidden sm:table-cell">
-                            <input
-                              className="w-full rounded border border-[#b5f277]/40 bg-[#0b0f12] text-[#b5f277] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:border-transparent"
-                              value={editDescription}
-                              onChange={(e) => setEditDescription(e.target.value)}
-                            />
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 text-center">
-                            <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
-                              <button
-                                className="rounded bg-[#b5f277] text-[#0b0f12] px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#d6ff8a] transition-all"
-                                onClick={() => handleUpdate(exp._id)}
-                              >
-                                Save
-                              </button>
-                              <button
-                                className="rounded bg-[#222b2e] text-[#b5f277] px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#333] transition-all"
-                                onClick={() => setEditingId(null)}
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td className="px-2 sm:px-4 py-2">
-                            <span className="inline-flex items-center rounded-full bg-[#b5f277]/20 px-2 sm:px-3 py-1 text-xs font-semibold text-[#b5f277] border border-[#b5f277]/30 whitespace-nowrap">
-                              {exp.category}
-                            </span>
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 text-right">
-                            <span className="font-bold text-[#b5f277] text-xs sm:text-base whitespace-nowrap">
-                              ₹{exp.amount.toFixed(2)}
-                            </span>
-                          </td>
-                          <td className="px-2 sm:px-4 py-2">
-                            <span className="text-[#e6f7d6] font-medium text-xs sm:text-sm">
-                              {new Date(exp.date).toLocaleDateString("en-IN", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </span>
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 hidden sm:table-cell">
-                            <span className="text-[#e6f7d6] text-xs sm:text-sm line-clamp-2">
-                              {exp.description || (
-                                <span className="text-[#b5f277]/60 italic">-</span>
-                              )}
-                            </span>
-                          </td>
-                          <td className="px-2 sm:px-4 py-2 text-center">
-                            <div className="flex items-center justify-center gap-1 sm:gap-2">
-                              <button
-                                className="rounded bg-[#7fffd4] text-[#0b0f12] px-2 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#b5f277] hover:text-[#0b0f12] transition-all flex items-center gap-0.5 sm:gap-1"
-                                onClick={() => startEditing(exp)}
-                              >
-                                <svg
-                                  className="w-3 h-3 sm:w-4 sm:h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                  />
-                                </svg>
-                                <span className="hidden sm:inline">Edit</span>
-                              </button>
-                              <button
-                                className="rounded bg-[#ff6b6b] text-white px-2 py-1 text-xs sm:text-sm font-bold shadow-sm hover:bg-[#ff8787] transition-all flex items-center gap-0.5 sm:gap-1"
-                                onClick={() => handleDelete(exp._id)}
-                              >
-                                <svg
-                                  className="w-3 h-3 sm:w-4 sm:h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                  />
-                                </svg>
-                                <span className="hidden sm:inline">Delete</span>
-                              </button>
-                            </div>
-                          </td>
-                        </>
-                      )}
+            <>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-[#0d1112] border-b-2 border-[#b5f277]/30">
+                    <tr>
+                      <th className="text-left py-3 px-4 font-semibold text-[#b5f277] uppercase tracking-wide">Category</th>
+                      <th className="text-right py-3 px-4 font-semibold text-[#b5f277] uppercase tracking-wide">Amount</th>
+                      <th className="text-left py-3 px-4 font-semibold text-[#b5f277] uppercase tracking-wide">Date</th>
+                      <th className="text-left py-3 px-4 font-semibold text-[#b5f277] uppercase tracking-wide hidden sm:table-cell">Description</th>
+                      <th className="text-center py-3 px-4 font-semibold text-[#b5f277] uppercase tracking-wide">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+
+                  <tbody className="divide-y divide-[#111318]">
+                    {paginatedExpenses.map((e) => (
+                      <tr key={e._id} className="hover:bg-[#0d1112]/50 transition">
+                        {editingId === e._id ? (
+                          <>
+                            <td className="py-3 px-4">
+                              <input
+                                value={editCategory}
+                                onChange={(i) => setEditCategory(i.target.value)}
+                                className="w-full bg-[#071014] text-white px-2 py-1 rounded border border-[#b5f277]/40 focus:ring-2 focus:ring-[#b5f277]"
+                              />
+                            </td>
+                            <td className="py-3 px-4">
+                              <input
+                                type="number"
+                                value={editAmount}
+                                onChange={(i) => setEditAmount(i.target.value)}
+                                className="w-full bg-[#071014] text-white px-2 py-1 rounded border border-[#b5f277]/40 focus:ring-2 focus:ring-[#b5f277]"
+                              />
+                            </td>
+                            <td className="py-3 px-4">
+                              <input
+                                type="date"
+                                value={editDate}
+                                onChange={(i) => setEditDate(i.target.value)}
+                                className="w-full bg-[#071014] text-white px-2 py-1 rounded border border-[#b5f277]/40 focus:ring-2 focus:ring-[#b5f277]"
+                              />
+                            </td>
+                            <td className="py-3 px-4 hidden sm:table-cell">
+                              <input
+                                value={editDescription}
+                                onChange={(i) => setEditDescription(i.target.value)}
+                                className="w-full bg-[#071014] text-white px-2 py-1 rounded border border-[#b5f277]/40 focus:ring-2 focus:ring-[#b5f277]"
+                              />
+                            </td>
+                            <td className="py-3 px-4">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() => saveEdit(e._id)}
+                                  className="px-3 py-1 bg-[#b5f277] text-[#0d1112] rounded-lg font-semibold text-base "
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={cancelEdit}
+                                  className="px-3 py-1 bg-[#23282c] text-gray-300 rounded-lg font-semibold text-base "
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td className="py-3 px-4">
+                              <span className="inline-block bg-[#b5f277]/10 border border-[#b5f277]/30 text-[#b5f277] px-3 py-1 rounded-full text-xs font-semibold">
+                                {e.category}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-right font-bold text-white">₹{e.amount}</td>
+                            <td className="py-3 px-4 text-white">{new Date(e.date).toLocaleDateString()}</td>
+                            <td className="py-3 px-4 text-gray-400 hidden sm:table-cell">{e.description || "-"}</td>
+                            <td className="py-3 px-4">
+                              <div className="flex items-center justify-center gap-2">
+                                <button
+                                  onClick={() => startEdit(e)}
+                                  className="px-3 py-1 bg-[#b5f277] text-[#0d1112] rounded-lg font-semibold"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => openDeleteModal(e._id)}
+                                  className="px-3 py-1 bg-[#a50000] text-white rounded-lg font-semibold "
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-[#0d1112] text-[#b5f277] rounded-lg font-semibold text-sm border border-[#b5f277]/30 hover:bg-[#111318] transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Previous
+                  </button>
+
+                  <span className="text-gray-400 text-sm">
+                    Page {currentPage} of {totalPages}
+                  </span>
+
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 bg-[#0d1112] text-[#b5f277] rounded-lg font-semibold text-sm border border-[#b5f277]/30 hover:bg-[#111318] transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
+          <div className="bg-[#0b0f12] border border-[#a50000] rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-12 w-12 rounded-full bg-[#a50000]/20 flex items-center justify-center">
+                <svg className="w-6 h-6 text-[#a50000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white">Confirm Delete</h3>
+                <p className="text-sm text-gray-400">This action cannot be undone</p>
+              </div>
+            </div>
+
+            <p className="text-gray-300 mb-6">
+              Are you sure you want to delete this expense? This will permanently remove it from your records.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={confirmDelete}
+                className="flex-1 px-4 py-2 bg-[#a50000] text-white rounded-lg font-semibold hover:bg-[#ff8787] transition"
+              >
+                Delete
+              </button>
+              <button
+                onClick={cancelDelete}
+                className="flex-1 px-4 py-2 bg-[#23282c] text-gray-300 rounded-lg font-semibold hover:bg-[#2d3438] transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default UserProfilePage;
 
-function SummaryCard({ title, value, accent }) {
-  return (
-    <div className={`rounded-xl border p-4 ${accent || ""} shadow-md`}>
-      <div className="text-xs sm:text-sm font-semibold uppercase tracking-wide mb-1">{title}</div>
-      <div className="text-xl sm:text-2xl font-extrabold break-words">{value}</div>
+/* ---------------- Components ---------------- */
+
+const ProfileCard = ({ user, loading, error, initials }) => (
+  <div className="rounded-lg bg-[#0b0f12] p-6 ">
+    <div className="flex items-center gap-4 mb-4">
+      <div className="h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg bg-[#b5f277] text-[#0d1112]">
+        {initials}
+      </div>
+      <div>
+        <h3 className="text-xl font-bold text-white">Account Details</h3>
+        <p className="text-sm text-gray-400">Personal information</p>
+      </div>
     </div>
-  );
-}
+
+    {loading ? (
+      <p className="text-gray-400">Loading...</p>
+    ) : error ? (
+      <p className="text-red-400">{error}</p>
+    ) : (
+      <div className="space-y-2 text-base">
+        <p className="font-semibold"><span className="text-white">Name : </span> {user?.name}</p>
+        <p className="font-semibold"><span className="text-white font-semibold">Email: </span> {user?.email}</p>
+      </div>
+    )}
+  </div>
+);
+
+const SummaryCard = ({ expenses, loading, error }) => (
+  <div className="rounded-lg bg-[#0b0f12] p-6">
+    <h3 className="text-lg font-bold mb-4 text-[#b5f277] text-center">Expense Summary</h3>
+
+    {loading ? (
+      <p className="text-gray-400">Loading...</p>
+    ) : error ? (
+      <p className="text-red-400">{error}</p>
+    ) : (
+      <div className="grid grid-cols-3 gap-4 ">
+        <SummaryItem label="Entries" value={expenses.length} />
+        <SummaryItem label="Total" value={`₹${expenses.reduce((s, e) => s + e.amount, 0)}`} />
+        <SummaryItem label="Latest" value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"} />
+      </div>
+    )}
+  </div>
+);
+
+const SummaryItem = ({ label, value }) => (
+  <div className="bg-[#23282c] rounded-lg p-4 text-center">
+    <p className="text-xs text-white uppercase">{label}</p>
+    <p className="text-xl font-bold text-white">{value}</p>
+  </div>
+);

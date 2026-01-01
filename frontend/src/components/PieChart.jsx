@@ -84,7 +84,7 @@ const PieChart = ({ expenses, heightClass = "h-56 sm:h-64 md:h-80" }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    color: "#ffffff", 
+    color: "#ffffff",
     plugins: {
       legend: {
         position: legendPos,

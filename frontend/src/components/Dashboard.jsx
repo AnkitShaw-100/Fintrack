@@ -4,8 +4,6 @@ import Budgeting from "./Budgeting.jsx";
 import ExpenseOverview from "./ExpenseOverview.jsx";
 import AddExpense from "./AddExpense.jsx";
 
-/* ------------------ Constants ------------------ */
-
 const CATEGORIES = [
   "Food",
   "Transportation",
@@ -53,11 +51,10 @@ const Dashboard = () => {
                 key={t.label}
                 onClick={() => setTab(idx)}
                 className={`text-left px-5 py-3 rounded-lg font-semibold transition
-                ${
-                  tab === idx
+                ${tab === idx
                     ? "bg-[#b5f277] text-[#0d1112] shadow"
                     : "text-white hover:bg-[#23282c]"
-                }`}
+                  }`}
               >
                 {t}
               </button>
@@ -72,12 +69,11 @@ const Dashboard = () => {
               <button
                 key={t.label}
                 onClick={() => setTab(idx)}
-                className={`whitespace-nowrap px-3 py-2 rounded-md font-semibold text-sm
-                ${
-                  tab === idx
+                className={`whitespace-nowrap px-3 py-2 rounded-lg font-semibold text-sm
+                ${tab === idx
                     ? "bg-[#b5f277] text-[#0d1112]"
                     : "text-white hover:bg-[#23282c]"
-                }`}
+                  }`}
               >
                 {t}
               </button>

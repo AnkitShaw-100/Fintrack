@@ -57,9 +57,8 @@ const faqData = [
 const Docs = () => {
   const [openFaq, setOpenFaq] = useState(null);
   return (
-      <>
     <div className="min-h-screen bg-[#07090a] text-gray-200 flex flex-col items-center px-4 py-20">
-      <div className="max-w-6xl w-full rounded-2xl p-10">
+      <div className="max-w-6xl w-full p-10">
         <h1 className="text-4xl font-extrabold text-white mb-2 text-center">
           Finora Documentation
         </h1>
@@ -179,9 +178,6 @@ const Docs = () => {
         </div>
       </div>
     </div>
-      <Footer />
-
-</>
   );
 };
 

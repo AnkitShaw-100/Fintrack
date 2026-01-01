@@ -22,14 +22,14 @@ const Home = () => {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md shadow-md transition font-bold"
+                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-md transition font-bold"
               >
                 Get Started
               </Link>
 
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 border border-[#b5f277] text-[#b5f277] px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#0f1416] transition font-bold"
+                className="inline-flex items-center gap-2 border border-[#b5f277] text-[#b5f277] px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-[#0f1416] transition font-bold"
               >
                 Login
               </Link>

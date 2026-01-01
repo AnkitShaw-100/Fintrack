@@ -58,7 +58,7 @@ export default function AddExpense({ onSaved }) {
 
     return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6">
-            <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-white">
                 Add Expense
             </h3>
 

@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const expenseRoutes = require("./routes/expenses");
 const userRoutes = require("./routes/user");
+const budgetRoutes = require("./routes/budgets");
 
 dotenv.config();
 connectDB();
@@ -14,7 +15,7 @@ app.use(
   cors({
     origin: [
       "https://fintrack-frontend-psi.vercel.app",
-      "http://localhost:5173"
+      "http://localhost:5173",
     ],
     credentials: true,
   })
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/budgets", budgetRoutes);
 
 app.get("/", (req, res) => res.send("API is running..."));
 

@@ -43,6 +43,7 @@ const UserProfilePage = () => {
       setExpenses((prev) => prev.map((e) => (e._id === id ? res.data : e)));
       setEditingId(null);
     } catch (err) {
+      if (err?.isAuthRedirect) return;
       setExpError(err?.response?.data?.message || "Failed to update expense");
     }
   };
@@ -52,6 +53,7 @@ const UserProfilePage = () => {
       await API.delete(`/api/expenses/${id}`);
       setExpenses((prev) => prev.filter((e) => e._id !== id));
     } catch (err) {
+      if (err?.isAuthRedirect) return;
       setExpError(err?.response?.data?.message || "Failed to delete expense");
     }
   };
@@ -68,6 +70,7 @@ const UserProfilePage = () => {
       const res = await API.get("/api/user/profile");
       setUser(res.data.user);
     } catch (err) {
+      if (err?.isAuthRedirect) return;
       if (err?.response?.data?.message) {
         setError(err.response.data.message);
       } else {
@@ -90,6 +93,7 @@ const UserProfilePage = () => {
       const res = await API.get("/api/expenses");
       setExpenses(res.data || []);
     } catch (err) {
+      if (err?.isAuthRedirect) return;
       setExpError(err?.response?.data?.message || "Failed to fetch expenses");
     } finally {
       setExpLoading(false);
@@ -102,8 +106,8 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0b0f12] to-[#1a1f23] px-2 sm:px-3 py-3 sm:py-5 pt-16 sm:pt-20">
-      <div className="w-full max-w-5xl mx-auto space-y-6 sm:space-y-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#0b0f12] to-[#1a1f23] px-4 sm:px-6 py-6 pt-24">
+      <div className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs sm:text-sm uppercase tracking-wide text-[#b5f277] font-semibold">Account</p>
@@ -114,7 +118,7 @@ const UserProfilePage = () => {
         {/* Top grid: Profile + Summary */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Profile Card */}
-          <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+          <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#b5f277] text-[#0b0f12] font-extrabold text-lg shadow-lg border-2 border-[#b5f277]">
                 {initials}
@@ -146,7 +150,7 @@ const UserProfilePage = () => {
             <div className="mt-5">
               <button
                 type="button"
-                className="rounded-lg bg-[#b5f277] px-4 py-2 text-sm font-bold text-[#0b0f12] shadow-lg transition hover:bg-[#d6ff8a] focus:outline-none focus:ring-2 focus:ring-[#b5f277] focus:ring-offset-2"
+                className="rounded-md bg-[#b5f277] px-4 py-2 text-sm font-bold text-[#07100a] shadow transition hover:bg-[#d6ff8a] focus:outline-none"
                 aria-label="Edit Profile"
               >
                 Edit Profile
@@ -155,7 +159,7 @@ const UserProfilePage = () => {
           </div>
 
           {/* Summary Card */}
-          <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+          <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <h3 className="text-lg font-bold text-[#b5f277]">Expense Summary</h3>
             </div>
@@ -165,28 +169,16 @@ const UserProfilePage = () => {
               <div className="text-red-400">{expError}</div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <SummaryCard
-                  title="Total Expenses"
-                  value={expenses.length}
-                  accent="bg-[#b5f277]/20 text-[#b5f277] border-[#b5f277]/30"
-                />
-                <SummaryCard
-                  title="Total Spend"
-                  value={`₹${expenses.reduce((s, e) => s + e.amount, 0).toFixed(2)}`}
-                  accent="bg-[#7fffd4]/20 text-[#7fffd4] border-[#7fffd4]/30"
-                />
-                <SummaryCard
-                  title="Latest"
-                  value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"}
-                  accent="bg-[#ffe066]/20 text-[#ffe066] border-[#ffe066]/30"
-                />
+                <SummaryCard title="Total Expenses" value={expenses.length} colorClass="text-[#b5f277]" />
+                <SummaryCard title="Total Spend" value={`₹${expenses.reduce((s, e) => s + e.amount, 0).toFixed(2)}`} colorClass="text-[#7fffd4]" />
+                <SummaryCard title="Latest" value={expenses[0] ? new Date(expenses[0].date).toLocaleDateString() : "-"} colorClass="text-[#ffe066]" />
               </div>
             )}
           </div>
         </div>
 
         {/* Expense History */}
-        <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 sm:p-7 shadow-2xl border border-[#222b2e]">
+        <div className="rounded-2xl bg-[#0c1112] p-4 sm:p-7 shadow-lg border border-[#111318]">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <p className="text-xs uppercase tracking-wide text-[#b5f277] font-semibold">History</p>
@@ -203,8 +195,8 @@ const UserProfilePage = () => {
           ) : (
             <div className="overflow-x-auto max-h-80 overflow-y-auto">
               <table className="w-full text-xs sm:text-sm">
-                <thead className="bg-gradient-to-r from-[#b5f277]/20 to-[#7fffd4]/10 sticky top-0">
-                  <tr className="border-b-2 border-[#b5f277]/30">
+                <thead className="bg-[#0b0f12] sticky top-0">
+                  <tr className="border-b border-[#222b2e]">
                     <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Category</th>
                     <th className="px-2 sm:px-4 py-2 text-right text-xs font-bold text-[#b5f277] uppercase tracking-wider">Amount</th>
                     <th className="px-2 sm:px-4 py-2 text-left text-xs font-bold text-[#b5f277] uppercase tracking-wider">Date</th>
@@ -212,7 +204,7 @@ const UserProfilePage = () => {
                     <th className="px-2 sm:px-4 py-2 text-center text-xs font-bold text-[#b5f277] uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#b5f277]/10">
+                <tbody className="divide-y divide-[#2b3538]">
                   {expenses.slice(0, 10).map((exp, index) => (
                     <tr
                       key={exp._id}

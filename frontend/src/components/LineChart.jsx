@@ -38,8 +38,7 @@ const buildMonthlyData = (expenses) => {
       .filter((e) => {
         const ed = new Date(e.date);
         return (
-          ed.getMonth() === d.getMonth() && ed.getFullYear() === d.getFullYear()
-        );
+          ed.getMonth() === d.getMonth() && ed.getFullYear() === d.getFullYear());
       })
       .reduce((s, e) => s + e.amount, 0);
     totals.push(monthTotal);
@@ -70,13 +69,23 @@ const LineChart = ({ expenses = [], heightClass = "h-64" }) => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
-      title: { display: true, text: "Monthly Expenses" },
-      tooltip: { mode: "index", intersect: false },
+      legend: { display: false, labels: { color: "#fff" } },
+      title: { display: true, text: "Monthly Expenses", color: "#b5f277" },
+      tooltip: {
+        mode: "index",
+        intersect: false,
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        backgroundColor: "rgba(0,0,0,0.75)",
+      },
     },
     scales: {
-      x: { grid: { display: false } },
-      y: { beginAtZero: true },
+      x: { grid: { display: false, color: "rgba(255,255,255,0.08)" }, ticks: { color: "#fff" } },
+      y: { beginAtZero: true, grid: { color: "rgba(255,255,255,0.08)" }, ticks: { color: "#fff" } },
+    },
+    elements: {
+      line: { borderColor: "#fff" },
+      point: { backgroundColor: "#fff", borderColor: "#fff" },
     },
   };
 

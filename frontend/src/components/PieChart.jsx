@@ -1,10 +1,35 @@
+import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const PieChart = ({ expenses, heightClass = "h-80" }) => {
+const PieChart = ({ expenses, heightClass = "h-56 sm:h-64 md:h-80" }) => {
+  const [legendPos, setLegendPos] = useState("bottom");
+  const [titleFontSize, setTitleFontSize] = useState(14);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => {
+      if (mq.matches) {
+        setLegendPos("right");
+        setTitleFontSize(16);
+      } else {
+        setLegendPos("bottom");
+        setTitleFontSize(12);
+      }
+    };
+    update();
+    mq.addEventListener
+      ? mq.addEventListener("change", update)
+      : mq.addListener(update);
+    return () => {
+      mq.removeEventListener
+        ? mq.removeEventListener("change", update)
+        : mq.removeListener(update);
+    };
+  }, []);
   const totals = {};
   expenses.forEach((exp) => {
     totals[exp.category] = (totals[exp.category] || 0) + exp.amount;
@@ -59,11 +84,26 @@ const PieChart = ({ expenses, heightClass = "h-80" }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    color: "#ffffff", 
     plugins: {
-      legend: { position: "bottom" },
-      title: { display: true, text: "Expenses by Category" },
-      tooltip: { enabled: true },
+      legend: {
+        position: legendPos,
+        labels: { boxWidth: 12, padding: 8, color: "#ffffff" },
+      },
+      title: {
+        display: true,
+        text: "Expenses by Category",
+        font: { size: titleFontSize },
+        color: "#b5f277",
+      },
+      tooltip: {
+        enabled: true,
+        titleColor: "#ffffff",
+        bodyColor: "#ffffff",
+        backgroundColor: "rgba(0,0,0,0.75)",
+      },
     },
+    layout: { padding: { top: 6, bottom: 6, left: 6, right: 6 } },
   };
 
   if (!labels.length) {
@@ -72,9 +112,11 @@ const PieChart = ({ expenses, heightClass = "h-80" }) => {
 
   return (
     <div
-      className={`${heightClass} bg-[#0c1112] p-4 rounded-lg overflow-hidden`}
+      className={`${heightClass} bg-[#0c1112] p-3 sm:p-4 rounded-lg overflow-hidden`}
     >
-      <Pie data={chartData} options={options} />
+      <div className="w-full h-full flex items-center justify-center">
+        <Pie data={chartData} options={options} />
+      </div>
     </div>
   );
 };

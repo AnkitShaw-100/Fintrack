@@ -6,31 +6,30 @@ const Home = () => {
   const accent = "#b5f277";
 
   return (
-    <div className="min-h-screen relative bg-[#07090a] text-gray-200">
+    <div className="min-h-screen relative bg-[#07090a] text-gray-200 px-4 sm:px-6">
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start mt-20">
-          <div className="mt-20">
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-white">
+      <section className="max-w-6xl mx-auto px-0 py-12 sm:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start mt-14 md:mt-20">
+          <div className="mt-4 md:mt-20">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white">
               Finora — Take full control of your money
             </h1>
-            <p className="mt-4 text-lg text-gray-300 max-w-xl">
+            <p className="mt-3 text-base sm:text-lg text-gray-300 max-w-xl">
               Track expenses, set budgets, and get AI-powered insights that help
               you spend smarter and save more. Secure, private, and built to
               grow with your life.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black px-6 py-3 rounded-md shadow-md transition font-bold"
+                className="inline-flex items-center gap-2 bg-[#b5f277] hover:bg-[#9fd063] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md shadow-md transition font-bold"
               >
                 Get Started
               </Link>
 
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 border border-[#b5f277] text-[#b5f277] px-6 py-3 rounded-md hover:bg-[#0f1416] transition fomt-bold"
+                className="inline-flex items-center gap-2 border border-[#b5f277] text-[#b5f277] px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-[#0f1416] transition font-bold"
               >
                 Login
               </Link>
@@ -39,11 +38,8 @@ const Home = () => {
 
           <div className="flex justify-center md:justify-end self-stretch">
             {/* Compact dashboard panel replacing phone mockup */}
-            <div className="w-full max-w-[21.6rem] md:w-[21.6rem] h-full rounded-3xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-4 shadow-2xl border border-[#111318]">
-              <div
-                className="w-full rounded-2xl bg-[#0b0f12] p-4 flex flex-col h-full"
-                style={{ minHeight: "90%", minWidth: "90%" }}
-              >
+            <div className="w-full max-w-[18rem] sm:max-w-[21.6rem] md:w-[21.6rem] h-full rounded-3xl bg-gradient-to-b from-[#0b0f12] to-[#0f1416] p-3 sm:p-4 shadow-2xl border border-[#111318]">
+              <div className="w-full rounded-2xl bg-[#0b0f12] p-3 sm:p-4 flex flex-col h-full">
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     <div
@@ -59,7 +55,7 @@ const Home = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-[#0d1112] p-3 mb-3">
+                <div className="rounded-lg bg-[#0d1112] p-2 sm:p-3 mb-3">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs text-gray-400">Total Balance</div>
@@ -81,9 +77,8 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 gap-2 mb-3">
-                  <div className="flex items-center justify-between p-2 rounded bg-[#0f1416]">
+                  <div className="flex items-center justify-between p-2 sm:p-2 rounded bg-[#0f1416]">
                     <div>
                       <div className="text-sm font-medium">PASHABANK USD</div>
                       <div className="text-xs text-gray-400">Checking</div>
@@ -143,18 +138,17 @@ const Home = () => {
 
       {/* Features */}
       <section>
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="max-w-6xl mx-auto px-0 sm:px-0 md:px-0 py-12 sm:py-16">
           <div className="flex flex-col items-center justify-center">
             <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 text-center">
               All the tools you need
             </h3>
-            <p className="text-gray-400 text-lg mb-10 max-w-2xl text-center">
+            <p className="text-gray-400 text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl text-center">
               Everything built to help you understand and improve your finances.
             </p>
           </div>
-
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+          <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -165,7 +159,7 @@ const Home = () => {
                 Log expenses in seconds and categorize them automatically.
               </p>
             </div>
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -176,7 +170,7 @@ const Home = () => {
                 Create budgets, get alerts, and see where your money goes.
               </p>
             </div>
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -187,7 +181,7 @@ const Home = () => {
                 Visualize trends and receive personalized saving tips.
               </p>
             </div>
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -198,7 +192,7 @@ const Home = () => {
                 Your data is encrypted and never shared without your consent.
               </p>
             </div>
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -209,7 +203,7 @@ const Home = () => {
                 Support for multiple accounts and currencies.
               </p>
             </div>
-            <div className="p-6 rounded-lg bg-[#0d1112]">
+            <div className="p-4 sm:p-6 rounded-lg bg-[#0d1112]">
               <div
                 className="text-xl font-semibold text-center"
                 style={{ color: accent }}
@@ -225,18 +219,18 @@ const Home = () => {
       </section>
 
       {/* Distinct Section: Financial Wellness */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
+      <section className="py-12 sm:py-2f4">
+        <div className="max-w-6xl mx-auto px-0 sm:px-0 md:px-0 flex flex-col items-center">
           <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 text-center">
             Your Financial Wellness, Simplified
           </h3>
-          <p className="text-gray-400 text-lg mb-10 max-w-2xl text-center">
+          <p className="text-gray-400 text-base sm:text-lg mb-8 max-w-2xl text-center">
             Stay motivated on your journey to financial freedom. Get
             personalized tips, track your progress, and celebrate your wins—all
             in one place.
           </p>
-          <div className="w-full flex flex-col md:flex-row gap-8 items-stretch justify-center">
-            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
+          <div className="w-full flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-center">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-4 sm:p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -249,7 +243,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg mb-6 md:mb-0">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-4 sm:p-6 shadow-lg mb-6 md:mb-0">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"
@@ -262,7 +256,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-6 shadow-lg">
+            <div className="flex-1 flex flex-row items-center bg-[#0d1112] rounded-lg p-4 sm:p-6 shadow-lg">
               <div>
                 <div
                   className="text-xl font-semibold mb-1 text-center"

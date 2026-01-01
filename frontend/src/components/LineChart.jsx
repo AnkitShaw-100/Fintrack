@@ -93,8 +93,12 @@ const LineChart = ({ expenses = [], heightClass = "h-64" }) => {
     <div
       className={`${heightClass} bg-[#0c1112] rounded-lg p-4 flex flex-col overflow-hidden`}
     >
-      <div className="flex-1">
-        <Line data={data} options={options} />
+      <div className="flex-1 flex items-center justify-center">
+        {!expenses.length ? (
+          <div className="text-center text-gray-500">No expense data</div>
+        ) : (
+          <Line data={data} options={options} />
+        )}
       </div>
     </div>
   );

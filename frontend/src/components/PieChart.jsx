@@ -106,16 +106,16 @@ const PieChart = ({ expenses, heightClass = "h-56 sm:h-64 md:h-80" }) => {
     layout: { padding: { top: 6, bottom: 6, left: 6, right: 6 } },
   };
 
-  if (!labels.length) {
-    return <div className="text-center text-gray-500">No expense data</div>;
-  }
-
   return (
     <div
       className={`${heightClass} bg-[#0c1112] p-3 sm:p-4 rounded-lg overflow-hidden`}
     >
       <div className="w-full h-full flex items-center justify-center">
-        <Pie data={chartData} options={options} />
+        {!labels.length ? (
+          <div className="text-center text-gray-500">No expense data</div>
+        ) : (
+          <Pie data={chartData} options={options} />
+        )}
       </div>
     </div>
   );

@@ -56,8 +56,8 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-white mb-3">Company</h4>
               <ul className="text-sm text-gray-400 space-y-2">
                 <li>
-                  <Link to="/about" className="hover:text-white">
-                    About
+                  <Link to="/terms" className="hover:text-white">
+                    Terms
                   </Link>
                 </li>
                 <li>
@@ -80,15 +80,15 @@ export default function Footer() {
             © {year} Finora — Built with care for your financial wellbeing.
           </div>
           <div className="mt-3 md:mt-0 flex items-center gap-4">
-            <a href="#" className="hover:text-white">
+            <Link to="/terms" className="hover:text-white">
               Terms
-            </a>
-            <a href="#" className="hover:text-white">
+            </Link>
+            <Link to="/privacy" className="hover:text-white">
               Privacy
-            </a>
-            <a href="#" className="hover:text-white">
+            </Link>
+            <Link to="/contact" className="hover:text-white">
               Contact
-            </a>
+            </Link>
           </div>
         </div>
       </div>

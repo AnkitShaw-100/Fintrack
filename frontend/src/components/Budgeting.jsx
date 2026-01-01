@@ -172,7 +172,7 @@ const Budgeting = () => {
 
       {/* Budget Cards */}
       {budgets.length === 0 ? (
-        <div className="bg-[#0b0f12] p-8 rounded-2xl border border-[#111318] text-center">
+        <div className="bg-[#0b0f12] p-8 rounded-lg border border-[#111318] text-center">
           <h3 className="text-xl font-bold text-white mb-2">
             No Budgets Yet
           </h3>

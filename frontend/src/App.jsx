@@ -6,6 +6,9 @@ import Signup from "./components/Signup.jsx";
 import Home from "./components/Home.jsx";
 import UserProfilePage from "./components/UserProfilePage.jsx";
 import Docs from "./components/Docs.jsx";
+import Terms from "./components/Terms.jsx";
+import Privacy from "./components/Privacy.jsx";
+import Contact from "./components/Contact.jsx";
 import Layout from "./components/Layout.jsx";
 
 import { UserProvider } from "./context/UserContext.jsx";
@@ -46,6 +49,33 @@ function App() {
           element={
             <Layout>
               <Docs />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/terms"
+          element={
+            <Layout>
+              <Terms />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/privacy"
+          element={
+            <Layout>
+              <Privacy />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={
+            <Layout>
+              <Contact />
             </Layout>
           }
         />

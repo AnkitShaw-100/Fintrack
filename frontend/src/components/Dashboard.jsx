@@ -48,7 +48,7 @@ const Dashboard = () => {
           <nav className="flex flex-col gap-2">
             {TABS.map((t, idx) => (
               <button
-                key={t.label}
+                key={t}
                 onClick={() => setTab(idx)}
                 className={`text-left px-5 py-3 rounded-lg font-semibold transition
                 ${tab === idx
@@ -67,7 +67,7 @@ const Dashboard = () => {
           <div className="flex gap-2 overflow-x-auto py-3">
             {TABS.map((t, idx) => (
               <button
-                key={t.label}
+                key={t}
                 onClick={() => setTab(idx)}
                 className={`whitespace-nowrap px-3 py-2 rounded-lg font-semibold text-sm
                 ${tab === idx

@@ -41,9 +41,9 @@ const PieChart = ({ expenses, heightClass = "h-56 sm:h-64 md:h-80" }) => {
   // Preferred colors per known category for consistent visuals
   const CATEGORY_COLORS = {
     Food: "#22c55e",
-    Transportation: "#3b82f6",
+    Transport: "#3b82f6",
     Housing: "#f59e0b",
-    Entertainment: "#ef4444",
+    Movies: "#ef4444",
     Utilities: "#06b6d4",
     Healthcare: "#a855f7",
     Education: "#14b8a6",

@@ -6,9 +6,9 @@ import AddExpense from "./AddExpense.jsx";
 
 const CATEGORIES = [
   "Food",
-  "Transportation",
+  "Transport",
   "Housing",
-  "Entertainment",
+  "Movies",
   "Utilities",
   "Healthcare",
   "Education",

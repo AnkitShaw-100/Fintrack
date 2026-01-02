@@ -3,9 +3,9 @@ import API from "../api";
 
 const CATEGORIES = [
     "Food",
-    "Transportation",
+    "Transport",
     "Housing",
-    "Entertainment",
+    "Movies",
     "Utilities",
     "Healthcare",
     "Education",
@@ -80,18 +80,25 @@ export default function AddExpense({ onSaved }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label className="text-base text-white font-semibold">Category</label>
-                        <input
-                            list="expense-categories"
+                        <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            placeholder="Select or type category"
-                            className="w-full mt-2 rounded-lg bg-[#23282c] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[#b5f277]"
-                        />
-                        <datalist id="expense-categories">
+                            className="w-full mt-2 rounded-lg bg-[#23282c] px-3 py-2 text-white"
+                        >
+                            <option value="" className="bg-[#23282c] text-gray-400">
+                                Select category
+                            </option>
                             {CATEGORIES.map((c) => (
-                                <option key={c} value={c} />
+                                <option
+                                    key={c}
+                                    value={c}
+                                    className="bg-[#23282c] text-white"
+                                >
+                                    {c}
+                                </option>
                             ))}
-                        </datalist>
+                        </select>
+
                     </div>
 
                     <div>

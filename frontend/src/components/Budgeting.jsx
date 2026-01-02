@@ -144,18 +144,16 @@ const Budgeting = () => {
               <label className="text-base text-white font-semibold">
                 Period
               </label>
-              <input
-                list="period-options"
+
+              <select
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
-                placeholder="Select period"
-                className="w-full mt-2 rounded-lg bg-[#23282c] px-3 py-2 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[#b5f277]"
-              />
-              <datalist id="period-options">
-                <option value="weekly" />
-                <option value="monthly" />
-                <option value="yearly" />
-              </datalist>
+                className="w-full mt-2 rounded-lg bg-[#23282c] px-3 py-2 text-white"
+              >
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
             </div>
           </div>
 
@@ -237,10 +235,10 @@ const Budgeting = () => {
                   <div className="w-full bg-[#1a1f23] rounded-full h-3 overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 rounded-full ${alertLevel === "danger"
-                          ? "bg-red-500 "
-                          : alertLevel === "warning"
-                            ? "bg-orange-500"
-                            : "bg-[#b5f277] "
+                        ? "bg-red-500 "
+                        : alertLevel === "warning"
+                          ? "bg-orange-500"
+                          : "bg-[#b5f277] "
                         }`}
                       style={{ width: `${progress}%` }}
                     />

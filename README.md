@@ -55,6 +55,3 @@ App runs at `http://localhost:5173`.
 * Add expenses with categories
 * View spending insights on the dashboard
 
-## License
-
-MIT License
